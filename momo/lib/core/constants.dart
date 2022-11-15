@@ -39,6 +39,7 @@ const kEmphasisLowest = 0.1;
 
 /// animations & transitions
 const kSampleDelay = Duration(seconds: 3);
+const kScrollAnimationDuration = Duration(milliseconds: 150);
 const kListAnimationDuration = Duration(milliseconds: 550);
 const kGridAnimationDuration = Duration(milliseconds: 850);
 const kContentAnimationDuration = Duration(seconds: 1);
