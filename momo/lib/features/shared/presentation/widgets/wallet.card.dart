@@ -49,14 +49,15 @@ class WalletCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  accountProvider,
+                  accountProvider.toUpperCase(),
                   style: context.theme.textTheme.subtitle1?.copyWith(
-                      color: ThemeConfig.kWhite.withOpacity(kEmphasisMedium)),
+                      color: (foreground ?? ThemeConfig.kWhite)
+                          .withOpacity(kEmphasisMedium)),
                 ),
                 Text(
-                  accountHolder,
+                  accountHolder.toUpperCase(),
                   style: context.theme.textTheme.headline5
-                      ?.copyWith(color: ThemeConfig.kWhite),
+                      ?.copyWith(color: foreground ?? ThemeConfig.kWhite),
                 ),
               ],
             ),
@@ -66,7 +67,7 @@ class WalletCard extends StatelessWidget {
                 child: Text(
                   formatAmount(balance),
                   style: context.theme.textTheme.headline3
-                      ?.copyWith(color: ThemeConfig.kWhite),
+                      ?.copyWith(color: foreground ?? ThemeConfig.kWhite),
                 ),
               ),
             ),
@@ -81,7 +82,7 @@ class WalletCard extends StatelessWidget {
                         .replaceAll('+', '')
                         .trim(),
                     style: context.theme.textTheme.headline6
-                        ?.copyWith(color: ThemeConfig.kWhite),
+                        ?.copyWith(color: foreground ?? ThemeConfig.kWhite),
                   ),
                 ),
               ],

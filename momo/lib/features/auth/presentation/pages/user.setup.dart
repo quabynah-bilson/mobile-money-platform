@@ -1,8 +1,10 @@
-import 'dart:math' as math;
-
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:momo/core/constants.dart';
 import 'package:momo/core/extensions.dart';
+import 'package:momo/core/router/route.gr.dart';
+import 'package:momo/core/user.session.dart';
+import 'package:momo/core/validator.dart';
 import 'package:momo/features/shared/presentation/widgets/animated.column.dart';
 import 'package:momo/features/shared/presentation/widgets/app.text.field.dart';
 import 'package:momo/features/shared/presentation/widgets/loading.overlay.dart';
@@ -15,120 +17,70 @@ class UserSetupPage extends StatefulWidget {
   State<UserSetupPage> createState() => _UserSetupPageState();
 }
 
-class _UserSetupPageState extends State<UserSetupPage>
-    with TickerProviderStateMixin {
+class _UserSetupPageState extends State<UserSetupPage> {
   final _formKey = GlobalKey<FormState>(),
       _nameController = TextEditingController();
-  var _loading = false;
-  late final AnimationController controller;
-  late final Animation colorAnimation, sizeAnimation;
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    doAfterDelay(() async {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    kUseDefaultOverlays(context);
-
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
+      backgroundColor: context.colorScheme.primary,
       body: LoadingOverlay(
-        isLoading: _loading,
-        child: Stack(
-          children: [
-            /// top-right background design
-            Positioned(
-              top: -(context.height * 0.1),
-              right: -context.width * 0.12,
-              child: Transform.rotate(
-                angle: -math.pi / -8.0,
-                child: AnimatedContainer(
-                  duration: kListAnimationDuration,
-                  height: context.height * 0.35,
-                  width: context.height * 0.35,
-                  decoration: BoxDecoration(
-                    color: context.colorScheme.primaryContainer
-                        .withOpacity(kEmphasisLow),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(kRadiusLargest),
-                      bottomRight: Radius.circular(kRadiusMedium),
-                    ),
+        child: SafeArea(
+          bottom: false,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 40, 24, 0),
+            child: AnimatedColumn(
+              animateType: AnimateType.slideRight,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  kAppName,
+                  style: context.theme.textTheme.headline6
+                      ?.copyWith(color: context.colorScheme.onPrimary),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Tell us about yourself...',
+                  style: context.theme.textTheme.headline4
+                      ?.copyWith(color: context.colorScheme.onPrimary),
+                ),
+                SizedBox(height: context.height * 0.1),
+                Form(
+                  key: _formKey,
+                  child: AppTextField(
+                    'Your full name',
+                    controller: _nameController,
+                    capitalization: TextCapitalization.words,
+                    action: TextInputAction.go,
+                    inputType: TextInputType.name,
+                    onChange: (input) => setState(
+                        () => UserSessionHandler.kUsername = input?.trim()),
+                    validator: Validators.validate,
                   ),
                 ),
-              ),
-            ),
-
-            /// bottom-left background design
-            Positioned(
-              bottom: -(context.height * 0.1),
-              left: -context.width * 0.12,
-              child: Transform.rotate(
-                angle: -math.pi / -8.0,
-                child: AnimatedContainer(
-                  duration: kListAnimationDuration,
-                  height: context.height * 0.4,
-                  width: context.height * 0.6,
-                  decoration: BoxDecoration(
-                    color: context.colorScheme.primaryContainer
-                        .withOpacity(kEmphasisLow),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(kRadiusLargest),
-                    ),
-                  ),
+                AppRoundedButton(
+                  text: 'Next',
+                  onTap: _validateAndProceed,
+                  buttonType: AppButtonType.swipeable,
+                  backgroundColor: context.colorScheme.secondary,
+                  textColor: context.colorScheme.onSecondary,
                 ),
-              ),
+              ],
             ),
-
-            /// content
-            Positioned.fill(
-              child: SafeArea(
-                bottom: false,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 40, 24, 0),
-                  child: AnimatedColumn(
-                    animateType: AnimateType.slideRight,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Let\'s introduce ourselves...',
-                        style: context.theme.textTheme.headline4,
-                      ),
-                      SizedBox(height: context.height * 0.1),
-                      Form(
-                        key: _formKey,
-                        child: AppTextField(
-                          'Your full name',
-                          controller: _nameController,
-                          capitalization: TextCapitalization.words,
-                          action: TextInputAction.go,
-                          inputType: TextInputType.name,
-                          enabled: !_loading,
-                          // validator: ,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: AppRoundedButton(
-                          text: 'Next',
-                          onTap: () => context.showSnackBar(kFeatureUnderDev),
-                          enabled: !_loading,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
+
+  /// validate and proceed
+  void _validateAndProceed() async {
+    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+      _formKey.currentState?.save();
+      var successful = await context.router.push(const AddWalletRoute());
+      if (successful is bool && successful) {
+        context.router
+            .pushAndPopUntil(const DashboardRoute(), predicate: (_) => false);
+      }
+    }
   }
 }

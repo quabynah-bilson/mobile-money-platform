@@ -22,10 +22,7 @@ class ThemeConfig {
         headline3: _tertiaryFont(color: textColor, fontWeight: FontWeight.w600),
         headline4: _tertiaryFont(
             color: textColor, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-        headline5: _tertiaryFont(
-          color: textColor,
-          fontWeight: FontWeight.bold,
-        ),
+        headline5: _tertiaryFont(color: textColor),
         headline6: _tertiaryFont(
             color: textColor, fontWeight: FontWeight.w700, letterSpacing: 0.15),
         subtitle1: _tertiaryFont(
@@ -51,8 +48,8 @@ class ThemeConfig {
         colorScheme: const ColorScheme.dark(
           primary: Color(0xffF5CE5E),
           primaryContainer: Color(0xffF5CE5E),
-          secondary: Color(0xff6D19AE),
-          secondaryContainer: Color(0xff6D19AE),
+          secondary: Color(0xff161616),
+          secondaryContainer: Color(0xff161616),
           tertiary: Colors.white,
           tertiaryContainer: Color(0xffdddddd),
           error: Color(0xffFC4B19),
@@ -104,8 +101,8 @@ class ThemeConfig {
         colorScheme: const ColorScheme.dark(
           primary: Color(0xffF5CE5E),
           primaryContainer: Color(0xffead196),
-          secondary: Color(0xff6D19AE),
-          secondaryContainer: Color(0xff6D19AE),
+          secondary: Color(0xff161616),
+          secondaryContainer: Color(0xff161616),
           tertiary: Color(0xff232323),
           tertiaryContainer: Color(0xff161616),
           background: Color(0xff131313),

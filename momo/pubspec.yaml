@@ -41,6 +41,9 @@ dependencies:
   animated_bottom_navigation_bar: ^1.1.0
   timeago_flutter: ^1.2.0
   auto_route: ^5.0.2
+  local_auth: ^2.1.2
+  carousel_slider: ^4.1.1
+  flutter_swipe_button: ^2.1.1+1
 
 dev_dependencies:
   flutter_test:

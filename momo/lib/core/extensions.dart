@@ -127,6 +127,21 @@ extension ContextX on BuildContext {
   }
 }
 
+/// extensions on [String]
+extension StringX on String? {
+  String capitalize() {
+    return isNullOrEmpty()
+        ? ''
+        : this!
+            .split(' ')
+            .map((str) =>
+                '${str[0].toUpperCase()}${str.substring(1).toLowerCase()}')
+            .join(' ');
+  }
+
+  bool isNullOrEmpty() => this == null || this!.isEmpty;
+}
+
 /// called in initState
 void doAfterDelay(Function() block, [int delayInMillis = 0]) =>
     Future.delayed(Duration(milliseconds: delayInMillis))

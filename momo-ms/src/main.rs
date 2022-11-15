@@ -1,7 +1,7 @@
 // use tokio;
 
-// mod money_transfer;
-// mod auth;
+mod money_transfer;
+mod auth;
 
 // #[tokio::main]
 fn main() {

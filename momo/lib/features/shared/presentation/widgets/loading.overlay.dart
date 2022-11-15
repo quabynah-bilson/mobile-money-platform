@@ -1,13 +1,16 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:momo/core/constants.dart';
 import 'package:momo/core/extensions.dart';
-import 'package:lottie/lottie.dart';
 
 /// loading indicator with some sort of animation
 class LoadingOverlay extends StatefulWidget {
   final Color? color;
   final Color? foregroundColor;
   final bool isLoading;
+  final bool showBackgroundOverlay;
   final Widget child;
   final String message;
   final String lottieAnimResource;
@@ -18,6 +21,7 @@ class LoadingOverlay extends StatefulWidget {
     this.color,
     this.foregroundColor,
     this.isLoading = false,
+    this.showBackgroundOverlay = true,
     this.message = 'Please wait',
     this.lottieAnimResource = kAppLoadingAnimation,
   }) : super(key: key);
@@ -69,44 +73,96 @@ class _LoadingOverlayState extends State<LoadingOverlay>
   }
 
   @override
-  Widget build(BuildContext context) => Stack(
-        children: [
-          /// underlying UI
-          Positioned.fill(child: widget.child),
+  Widget build(BuildContext context) {
+    kUseDefaultOverlays(context,
+        statusBarBrightness: widget.showBackgroundOverlay
+            ? Brightness.light
+            : context.theme.brightness);
 
-          /// loading indicator semi-opaque background
-          if (_overlayVisible) ...{
-            FadeTransition(
-              opacity: _animation,
-              child: Stack(
-                children: <Widget>[
-                  Positioned.fill(
-                    child: Opacity(
-                      opacity: kEmphasisHigh,
-                      child: ModalBarrier(
-                        dismissible: false,
-                        color: (widget.color ?? context.colorScheme.surface)
-                            .withOpacity(kEmphasisMedium),
-                      ),
-                    ),
+    return Stack(
+      children: [
+        if (widget.showBackgroundOverlay) ...{
+          /// top-right background design
+          Positioned(
+            top: -(context.height * 0.1),
+            right: -context.width * 0.12,
+            child: Transform.rotate(
+              angle: -math.pi / -8.0,
+              child: AnimatedContainer(
+                duration: kListAnimationDuration,
+                height: context.height * 0.35,
+                width: context.height * 0.35,
+                decoration: BoxDecoration(
+                  color: (widget.color ?? context.colorScheme.background)
+                      .withOpacity(kEmphasisLow),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(kRadiusLargest),
+                    bottomRight: Radius.circular(kRadiusMedium),
                   ),
-
-                  /// loading indicator
-                  Positioned.fill(
-                    child: Center(
-                      child: LoadingIndicatorItem(
-                        message: widget.message,
-                        foregroundColor: widget.foregroundColor,
-                        loadingAnimationUrl: widget.lottieAnimResource,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
-          },
-        ],
-      );
+          ),
+
+          /// bottom-left background design
+          Positioned(
+            bottom: -(context.height * 0.1),
+            left: -context.width * 0.12,
+            child: Transform.rotate(
+              angle: -math.pi / -8.0,
+              child: AnimatedContainer(
+                duration: kListAnimationDuration,
+                height: context.height * 0.4,
+                width: context.height * 0.6,
+                decoration: BoxDecoration(
+                  color: (widget.color ?? context.colorScheme.background)
+                      .withOpacity(kEmphasisLow),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(kRadiusLargest),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        },
+
+        /// underlying UI
+        Positioned.fill(child: widget.child),
+
+        /// loading indicator semi-opaque background
+        if (_overlayVisible) ...{
+          FadeTransition(
+            opacity: _animation,
+            child: Stack(
+              children: <Widget>[
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: kEmphasisHigh,
+                    child: ModalBarrier(
+                      dismissible: false,
+                      color: (widget.color ?? context.colorScheme.surface)
+                          .withOpacity(kEmphasisMedium),
+                    ),
+                  ),
+                ),
+
+                /// loading indicator
+                Positioned.fill(
+                  child: Center(
+                    child: LoadingIndicatorItem(
+                      message: widget.message,
+                      foregroundColor: widget.foregroundColor,
+                      loadingAnimationUrl: widget.lottieAnimResource,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        },
+      ],
+    );
+  }
 }
 
 class LoadingIndicatorItem extends StatelessWidget {

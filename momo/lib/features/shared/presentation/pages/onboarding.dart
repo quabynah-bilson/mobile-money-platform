@@ -36,15 +36,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    kUseDefaultOverlays(context);
+    kUseDefaultOverlays(context, statusBarBrightness: context.theme.brightness);
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      appBar: AppBar(),
       body: AnimationLimiter(
         child: Stack(
           children: [
             /// top section
             Positioned(
-              top: 16,
+              top: 0,
               left: 24,
               child: SafeArea(
                 bottom: false,
@@ -66,6 +69,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
             /// content on page
             Positioned.fill(
+              top: 40,
               child: Column(
                 children: [
                   const Spacer(flex: 2),
@@ -76,7 +80,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       children: [
                         /// first card
                         Positioned.fill(
-                          left: -context.width * 0.5,
+                          left: -context.width * 0.4,
                           child: AnimatedOpacity(
                             duration: kContentAnimationDuration,
                             opacity: _showCards ? 1 : 0,
@@ -84,11 +88,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               child: Transform.rotate(
                                 angle: -pi / 35,
                                 child: const WalletCard(
-                                  accountNumber: '5294-2436-4780-2468',
-                                  accountHolder: 'Quabynah Bilson Jr.',
-                                  accountProvider: 'Calbank',
+                                  accountNumber: '+233207996951',
+                                  accountHolder: 'Belinda Darglo',
+                                  accountProvider: 'Vodafone',
                                   balance: 4570.85,
-                                  background: ThemeConfig.kPurple,
+                                  background: ThemeConfig.kRed,
                                 ),
                               ),
                             ),
@@ -105,12 +109,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             child: Center(
                               child: Transform.rotate(
                                 angle: pi / 10,
-                                child: const WalletCard(
+                                child: WalletCard(
                                   accountNumber: '233554635701',
-                                  accountHolder: 'Dennis Bilson',
+                                  accountHolder: 'Dennis K. Bilson',
                                   accountProvider: 'MTN',
-                                  balance: 12837.34,
-                                  background: ThemeConfig.kBlue,
+                                  balance: 19807.34,
+                                  background: context.colorScheme.primary,
+                                  foreground: context.colorScheme.onPrimary,
                                 ),
                               ),
                             ),
@@ -119,22 +124,28 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 40),
                   Expanded(
                     flex: 3,
-                    child: AnimatedColumn(
-                      duration: kGridAnimationDuration.inMilliseconds,
-                      animateType: AnimateType.slideLeft,
-                      children: [
-                        Text(kAppDesc,
-                            style: context.theme.textTheme.subtitle1),
-                        const SizedBox(height: 24),
-                        AppRoundedButton(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(24, 40, 24, 0),
+                      child: AnimatedColumn(
+                        duration: kGridAnimationDuration.inMilliseconds,
+                        animateType: AnimateType.slideLeft,
+                        children: [
+                          Text(kAppDesc,
+                              style: context.theme.textTheme.subtitle1),
+                          const SizedBox(height: 24),
+                          AppRoundedButton(
                             text: 'Get started',
                             onTap: () => context.router.pushAndPopUntil(
                                 const UserSetupRoute(),
-                                predicate: (_) => false)),
-                      ],
+                                predicate: (_) => false),
+                            buttonType: AppButtonType.swipeable,
+                            backgroundColor: context.colorScheme.primary,
+                            textColor: context.colorScheme.onPrimary,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
