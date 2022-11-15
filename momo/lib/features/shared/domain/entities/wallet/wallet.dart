@@ -22,6 +22,10 @@ class Wallet {
     required this.hashedPhone,
     required this.balance,
   });
+
+  factory Wallet.fromJson(json) => _$WalletFromJson(json);
+
+  Map<String, dynamic> toJson() => _$WalletToJson(this);
 }
 
 final kSampleWallets = [

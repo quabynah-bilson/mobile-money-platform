@@ -2,14 +2,14 @@ use actix_web::{App, HttpServer, middleware::Logger};
 
 // APIs
 use api::auth;
-use api::money_transfer;
+
 
 mod api;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     // setup logger
-    std::env::set_var("RUST_LOG", "debug");
+    std::env::set_var("RUST_LOG", "actix_web=debug,actix_server=info");
     std::env::set_var("RUST_BACKTRACE", "1");
     env_logger::init();
 

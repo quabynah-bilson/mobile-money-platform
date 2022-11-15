@@ -48,6 +48,53 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: context.colorScheme.primary,
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+
+        /// logo & actions
+        appBar: AppBar(
+          centerTitle: false,
+          backgroundColor: context.colorScheme.primary.withOpacity(kEmphasisNone),
+          title: GestureDetector(
+            onTap: () => showProfileSheetWithOptions(context),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(kRadiusLarge),
+                color: context.colorScheme.onPrimary,
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: AnimatedRow(
+                animateType: AnimateType.slideRight,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(TablerIcons.user_circle,
+                      color: context.colorScheme.primary),
+                  const SizedBox(width: 8),
+                  Text(kAppName,
+                      style: context.theme.textTheme.subtitle1
+                          ?.copyWith(color: context.colorScheme.primary)),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            IconButton(
+              color: context.colorScheme.onPrimary,
+              onPressed: () => setState(() => _showBalances = !_showBalances),
+              icon: Icon(_showBalances ? TablerIcons.eye_off : TablerIcons.eye),
+              tooltip: 'Toogle balances',
+              enableFeedback: true,
+            ),
+            IconButton(
+              color: context.colorScheme.onPrimary,
+              // todo => show notifications
+              onPressed: () => context.showSnackBar(kFeatureUnderDev),
+              icon: const Icon(TablerIcons.checklist),
+              tooltip: 'Approvals',
+              enableFeedback: true,
+            ),
+          ],
+        ),
         body: LoadingOverlay(
           isLoading: _loading,
           child: SafeArea(
@@ -59,70 +106,6 @@ class _DashboardPageState extends State<DashboardPage> {
                 Positioned.fill(
                   child: Column(
                     children: [
-                      /// logo & actions
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            /// left side
-                            GestureDetector(
-                              onTap: () => showProfileSheetWithOptions(context),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(kRadiusLarge),
-                                  color: context.colorScheme.onPrimary,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 12),
-                                child: AnimatedRow(
-                                  animateType: AnimateType.slideRight,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(TablerIcons.user_circle,
-                                        color: context.colorScheme.primary),
-                                    const SizedBox(width: 8),
-                                    Text(kAppName,
-                                        style: context.theme.textTheme.subtitle1
-                                            ?.copyWith(
-                                                color: context
-                                                    .colorScheme.primary)),
-                                  ],
-                                ),
-                              ),
-                            ),
-
-                            /// right side
-                            AnimatedRow(
-                              animateType: AnimateType.slideLeft,
-                              duration: kGridAnimationDuration.inMilliseconds,
-                              children: [
-                                IconButton(
-                                  color: context.colorScheme.onPrimary,
-                                  onPressed: () => setState(
-                                      () => _showBalances = !_showBalances),
-                                  icon: Icon(_showBalances
-                                      ? TablerIcons.eye_off
-                                      : TablerIcons.eye),
-                                  tooltip: 'Toogle balances',
-                                  enableFeedback: true,
-                                ),
-                                IconButton(
-                                  color: context.colorScheme.onPrimary,
-                                  // todo => show notifications
-                                  onPressed: () =>
-                                      context.showSnackBar(kFeatureUnderDev),
-                                  icon: const Icon(TablerIcons.checklist),
-                                  tooltip: 'Approvals',
-                                  enableFeedback: true,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-
                       /// wallets
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -281,8 +264,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                   DashboardActionTile(
                                     label: 'More',
                                     icon: TablerIcons.dots_circle_horizontal,
-                                    onTap: () =>
-                                        context.router.push(const DashboardOptionsRoute()),
+                                    onTap: () => context.router
+                                        .push(const DashboardOptionsRoute()),
                                   ),
                                 ],
                               ),

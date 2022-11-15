@@ -22,7 +22,6 @@ class AddWalletPage extends StatefulWidget {
 class _AddWalletPageState extends State<AddWalletPage> {
   final _formKey = GlobalKey<FormState>(),
       _phoneNumberController = TextEditingController(),
-      _pinController = TextEditingController(),
       _networks = ['MTN', 'Vodafone', 'AirtelTigo'];
   late var _loading = false, _selectedNetwork = _networks.first;
 

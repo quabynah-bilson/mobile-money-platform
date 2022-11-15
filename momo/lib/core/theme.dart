@@ -87,7 +87,7 @@ class ThemeConfig {
           showUnselectedLabels: false,
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           actionsIconTheme: IconThemeData(color: Colors.black),
@@ -135,7 +135,7 @@ class ThemeConfig {
           showUnselectedLabels: false,
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xff131313),
+          backgroundColor: Colors.transparent,
           iconTheme: IconThemeData(color: Colors.white),
           centerTitle: true,
           actionsIconTheme: IconThemeData(color: Colors.white),

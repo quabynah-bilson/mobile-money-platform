@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:momo/core/constants.dart';
 import 'package:momo/core/extensions.dart';
@@ -16,51 +17,59 @@ class DashboardOptionsPage extends StatefulWidget {
 
 class _DashboardOptionsPageState extends State<DashboardOptionsPage> {
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+    return AnimationLimiter(
+      child: Scaffold(
         backgroundColor: context.colorScheme.primary,
         body: LoadingOverlay(
           child: CustomScrollView(
             shrinkWrap: true,
             slivers: [
-              const SliverAppBar(
-                title: Text('More options'),
-                backgroundColor: Colors.transparent,
-              ),
+              SliverAppBar(
+                  title: const Text('More options'),
+                  backgroundColor: context.colorScheme.primary.withOpacity(kEmphasisNone)),
               SliverPadding(
                 padding: const EdgeInsets.fromLTRB(24, 40, 24, 0),
                 sliver: SliverGrid(
                   delegate: SliverChildListDelegate(
-                    [
-                      const DashboardActionTile(
-                        label: 'Favorites',
-                        icon: TablerIcons.heart_plus,
+                    AnimationConfiguration.toStaggeredList(
+                      duration: kGridAnimationDuration,
+                      childAnimationBuilder: (child) => SlideAnimation(
+                        verticalOffset: kListSlideOffset,
+                        child: FadeInAnimation(child: child),
                       ),
-                      const DashboardActionTile(
-                        label: 'Airtime reversals',
-                        icon: TablerIcons.arrow_back,
-                      ),
-                      const DashboardActionTile(
-                        label: 'Statements',
-                        icon: TablerIcons.notes,
-                      ),
-                      const DashboardActionTile(
-                        label: 'Change PIN',
-                        icon: TablerIcons.lock_access,
-                      ),
-                      const DashboardActionTile(
-                        label: 'Report Fraud',
-                        icon: TablerIcons.speakerphone,
-                      ),
-                      const DashboardActionTile(
-                        label: 'Agent Locator',
-                        icon: Icons.supervisor_account_outlined,
-                      ),
-                      const DashboardActionTile(
-                        label: 'Customer care',
-                        icon: Icons.support_agent_outlined,
-                        onTap: callCustomerCare,
-                      ),
-                    ],
+                      children: [
+                        const DashboardActionTile(
+                          label: 'Favorites',
+                          icon: TablerIcons.heart_plus,
+                        ),
+                        const DashboardActionTile(
+                          label: 'Airtime reversals',
+                          icon: TablerIcons.arrow_back,
+                        ),
+                        const DashboardActionTile(
+                          label: 'Statements',
+                          icon: TablerIcons.notes,
+                        ),
+                        const DashboardActionTile(
+                          label: 'Change PIN',
+                          icon: TablerIcons.lock_access,
+                        ),
+                        const DashboardActionTile(
+                          label: 'Report Fraud',
+                          icon: TablerIcons.speakerphone,
+                        ),
+                        const DashboardActionTile(
+                          label: 'Agent Locator',
+                          icon: Icons.supervisor_account_outlined,
+                        ),
+                        const DashboardActionTile(
+                          label: 'Customer care',
+                          icon: Icons.support_agent_outlined,
+                          onTap: callCustomerCare,
+                        ),
+                      ],
+                    ),
                   ),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
@@ -72,5 +81,7 @@ class _DashboardOptionsPageState extends State<DashboardOptionsPage> {
             ],
           ),
         ),
-      );
+      ),
+    );
+  }
 }
