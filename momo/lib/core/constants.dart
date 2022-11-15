@@ -51,5 +51,5 @@ const kUserIdKey = 'momo-id-key';
 
 String formatAmount(double value) {
   return toCurrencyString('$value',
-      leadingSymbol: kCurrency, useSymbolPadding: true);
+      leadingSymbol: kCurrency/*, useSymbolPadding: true*/);
 }

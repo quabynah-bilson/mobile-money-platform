@@ -36,33 +36,34 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    kUseDefaultOverlays(context, statusBarBrightness: context.theme.brightness);
+    kUseDefaultOverlays(context,
+        statusBarBrightness: context.invertedThemeBrightness);
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      extendBody: true,
-      appBar: AppBar(),
       body: AnimationLimiter(
         child: Stack(
           children: [
             /// top section
             Positioned(
-              top: 0,
-              left: 24,
+              top: 16,
+              right: 0,
+              left: 0,
               child: SafeArea(
                 bottom: false,
-                child: AnimatedRow(
-                  animateType: AnimateType.slideRight,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    LottieBuilder.asset(
-                      kAppLoadingAnimation,
-                      height: 56,
-                      width: 56,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(kAppName, style: context.theme.textTheme.headline4),
-                  ],
+                child: Center(
+                  child: AnimatedRow(
+                    animateType: AnimateType.slideLeft,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      LottieBuilder.asset(
+                        kAppLoadingAnimation,
+                        height: 56,
+                        width: 56,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(kAppName, style: context.theme.textTheme.headline6),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -130,7 +131,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       padding: const EdgeInsets.fromLTRB(24, 40, 24, 0),
                       child: AnimatedColumn(
                         duration: kGridAnimationDuration.inMilliseconds,
-                        animateType: AnimateType.slideLeft,
+                        animateType: AnimateType.slideRight,
                         children: [
                           Text(kAppDesc,
                               style: context.theme.textTheme.subtitle1),
@@ -138,7 +139,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           AppRoundedButton(
                             text: 'Get started',
                             onTap: () => context.router.pushAndPopUntil(
-                                const UserSetupRoute(),
+                                // UserSessionHandler.kIsLoggedIn
+                                //     ? const DashboardRoute()
+                                //     : const UserSetupRoute(),
+                                const DashboardRoute(),
                                 predicate: (_) => false),
                             buttonType: AppButtonType.swipeable,
                             backgroundColor: context.colorScheme.primary,
@@ -175,40 +179,3 @@ class _OnboardingPageState extends State<OnboardingPage> {
     );
   }
 }
-
-/*
-Center(
-                child: AnimatedColumn(
-                  animateType: AnimateType.slideUp,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AnimatedRow(
-                      animateType: AnimateType.slideBottom,
-                      duration: 350,
-                      children: [
-                        Text(kAppName,
-                            style: context.theme.textTheme.headline3),
-                      ],
-                    ),
-                    LottieBuilder.asset(
-                      kAppLoadingAnimation,
-                      height: context.height * 0.35,
-                      width: context.width,
-                    ),
-                    Text(
-                      kAppDesc,
-                      style: context.theme.textTheme.subtitle1?.copyWith(
-                        color: context.colorScheme.onBackground
-                            .withOpacity(kEmphasisMedium),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 40),
-                    AppRoundedButton(
-                      text: 'Get started',
-                      onTap: () => context.router.push(const UserSetupRoute()),
-                    ),
-                  ],
-                ),
-              ),
-* */

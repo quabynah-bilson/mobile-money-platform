@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:momo/features/auth/presentation/pages/user.setup.dart';
 import 'package:momo/features/auth/presentation/pages/verify.pin.dart';
 import 'package:momo/features/money.transfer/presentation/pages/add.wallet.dart';
+import 'package:momo/features/money.transfer/presentation/pages/wallet.details.dart';
 import 'package:momo/features/shared/presentation/pages/dashboard.dart';
 import 'package:momo/features/shared/presentation/pages/onboarding.dart';
 import 'package:momo/features/shared/presentation/pages/verify.otp.dart';
@@ -20,6 +21,7 @@ import 'package:momo/features/shared/presentation/pages/verify.otp.dart';
 
     /// money transfer
     AutoRoute(page: AddWalletPage),
+    AutoRoute(page: WalletDetailsPage),
 
   ],
 )

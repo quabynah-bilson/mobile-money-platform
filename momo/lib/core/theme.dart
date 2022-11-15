@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:momo/core/constants.dart';
 
 class ThemeConfig {
   static const kOrange = Colors.orange,
       kWhite = Colors.white,
+      kBlack = Colors.black,
       kAmber = Colors.amber,
       kGreen = Colors.green,
       kBlue = Color(0xff3883FB),
@@ -44,8 +46,8 @@ class ThemeConfig {
   static ThemeData kLightThemeData(BuildContext context) =>
       ThemeData.light(useMaterial3: true).copyWith(
         textTheme: _kDefaultTextTheme(Colors.black),
-        scaffoldBackgroundColor: const Color(0xffF9F9F9),
-        colorScheme: const ColorScheme.dark(
+        scaffoldBackgroundColor: Colors.white,
+        colorScheme:  const ColorScheme.dark(
           primary: Color(0xffF5CE5E),
           primaryContainer: Color(0xffF5CE5E),
           secondary: Color(0xff161616),
@@ -53,8 +55,8 @@ class ThemeConfig {
           tertiary: Colors.white,
           tertiaryContainer: Color(0xffdddddd),
           error: Color(0xffFC4B19),
-          background: Color(0xffF9F9F9),
-          surface: Colors.white,
+          background: Colors.white,
+          surface: Color(0xffeeeeee),
           onBackground: Colors.black,
           onSurface: Colors.black,
           onPrimary: Colors.black,
@@ -86,7 +88,7 @@ class ThemeConfig {
           showUnselectedLabels: false,
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xffF9F9F9),
+          backgroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           actionsIconTheme: IconThemeData(color: Colors.black),

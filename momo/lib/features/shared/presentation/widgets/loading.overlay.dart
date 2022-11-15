@@ -93,7 +93,7 @@ class _LoadingOverlayState extends State<LoadingOverlay>
                 height: context.height * 0.35,
                 width: context.height * 0.35,
                 decoration: BoxDecoration(
-                  color: (widget.color ?? context.colorScheme.background)
+                  color: widget.color ?? context.colorScheme.background
                       .withOpacity(kEmphasisLow),
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(kRadiusLargest),
@@ -115,8 +115,7 @@ class _LoadingOverlayState extends State<LoadingOverlay>
                 height: context.height * 0.4,
                 width: context.height * 0.6,
                 decoration: BoxDecoration(
-                  color: (widget.color ?? context.colorScheme.background)
-                      .withOpacity(kEmphasisLow),
+                  color: widget.color ?? context.colorScheme.background.withOpacity(kEmphasisLow),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(kRadiusLargest),
                   ),
@@ -140,7 +139,7 @@ class _LoadingOverlayState extends State<LoadingOverlay>
                     opacity: kEmphasisHigh,
                     child: ModalBarrier(
                       dismissible: false,
-                      color: (widget.color ?? context.colorScheme.surface)
+                      color: context.colorScheme.surface
                           .withOpacity(kEmphasisMedium),
                     ),
                   ),

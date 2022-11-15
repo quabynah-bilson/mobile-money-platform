@@ -23,8 +23,7 @@ class _MomoAppState extends State<MomoApp> {
           title: kAppName,
           theme: ThemeConfig.kLightThemeData(context),
           darkTheme: ThemeConfig.kDarkThemeData(context),
-          // todo => add support for dark theme
-          themeMode: ThemeMode.light,
+          themeMode: ThemeMode.system,
           routerDelegate: _router.delegate(),
           routeInformationParser: _router.defaultRouteParser(),
         ),
