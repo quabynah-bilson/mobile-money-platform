@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:momo/core/constants.dart';
 import 'package:momo/core/extensions.dart';
+import 'package:momo/core/modals.dart';
 import 'package:momo/features/shared/presentation/widgets/dashboard.tile.dart';
 import 'package:momo/features/shared/presentation/widgets/loading.overlay.dart';
 
@@ -27,7 +28,8 @@ class _DashboardOptionsPageState extends State<DashboardOptionsPage> {
             slivers: [
               SliverAppBar(
                   title: const Text('More options'),
-                  backgroundColor: context.colorScheme.primary.withOpacity(kEmphasisNone)),
+                  backgroundColor:
+                      context.colorScheme.primary.withOpacity(kEmphasisNone)),
               SliverPadding(
                 padding: const EdgeInsets.fromLTRB(24, 40, 24, 0),
                 sliver: SliverGrid(
@@ -67,6 +69,15 @@ class _DashboardOptionsPageState extends State<DashboardOptionsPage> {
                           label: 'Customer care',
                           icon: Icons.support_agent_outlined,
                           onTap: callCustomerCare,
+                        ),
+                        const DashboardActionTile(
+                          label: 'MTN Services',
+                          icon: Icons.sim_card_outlined,
+                        ),
+                        DashboardActionTile(
+                          label: 'About us',
+                          icon: TablerIcons.info_circle,
+                          onTap: () => showAppDetailsSheet(context),
                         ),
                       ],
                     ),

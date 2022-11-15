@@ -90,9 +90,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               child: Transform.rotate(
                                 angle: -pi / 35,
                                 child: const WalletCard(
-                                  accountNumber: '+233207996951',
-                                  accountHolder: 'Belinda Darglo',
-                                  accountProvider: 'Vodafone',
+                                  accountNumber: '+233***951',
+                                  accountHolder: 'Eva Jackson',
+                                  accountProvider: 'Telco',
                                   balance: 4570.85,
                                   background: ThemeConfig.kRed,
                                 ),
@@ -112,9 +112,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               child: Transform.rotate(
                                 angle: pi / 10,
                                 child: WalletCard(
-                                  accountNumber: '233554635701',
-                                  accountHolder: 'Dennis K. Bilson',
-                                  accountProvider: 'MTN',
+                                  accountNumber: '233***123',
+                                  accountHolder: 'John Doe',
+                                  accountProvider: 'Telco',
                                   balance: 19807.34,
                                   background: context.colorScheme.primary,
                                   foreground: context.colorScheme.onPrimary,
