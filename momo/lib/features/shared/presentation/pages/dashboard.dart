@@ -148,10 +148,13 @@ class _DashboardPageState extends State<DashboardPage> {
                               ...kSampleWallets.map(
                                 (wallet) => WalletCard(
                                   key: ValueKey(wallet.id),
-                                  accountNumber: _showBalances ? wallet.phone : wallet.hashedPhone,
+                                  accountNumber: _showBalances
+                                      ? wallet.phone
+                                      : wallet.hashedPhone,
                                   accountHolder: wallet.holder,
                                   accountProvider: wallet.provider,
-                                  balance: _showBalances ? wallet.balance : null,
+                                  balance:
+                                      _showBalances ? wallet.balance : null,
                                   background: context.colorScheme.surface,
                                   foreground: context.colorScheme.onSurface,
                                   marginEnd: 24,
@@ -164,6 +167,13 @@ class _DashboardPageState extends State<DashboardPage> {
                             ],
                           ),
                         ),
+                      ),
+
+                      /// actions
+                      AnimatedRow(
+                        children: [
+                          _buildActionButton(label: 'Top up', icon: TablerIcons.upload),
+                        ],
                       ),
                     ],
                   ),
@@ -192,6 +202,31 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ),
         ),
+      );
+
+  Widget _buildActionButton({
+    required String label,
+    required IconData icon,
+    void Function()? onTap,
+  }) =>
+      Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          FloatingActionButton(
+            heroTag: label.toLowerCase().replaceAll(' ', '-'),
+            backgroundColor: context.colorScheme.surface,
+            foregroundColor: context.colorScheme.onSurface,
+            onPressed: onTap ?? () => context.showSnackBar(kFeatureUnderDev),
+            child: Icon(icon),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            label,
+            style: context.theme.textTheme.button
+                ?.copyWith(color: context.colorScheme.onPrimary),
+          ),
+        ],
       );
 
   /// add a new wallet
