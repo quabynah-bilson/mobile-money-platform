@@ -101,7 +101,7 @@ class _AppTextFieldState extends State<AppTextField> {
   }
 
   Widget _cardTextField() => TextFormField(
-        cursorColor: context.colorScheme.primary,
+        cursorColor: context.colorScheme.secondary,
         maxLength: widget.maxLength,
         controller: widget.controller,
         keyboardType: TextInputType.number,
@@ -145,7 +145,7 @@ class _AppTextFieldState extends State<AppTextField> {
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: context.colorScheme.primary),
+              borderSide: BorderSide(color: context.colorScheme.secondary),
               borderRadius: BorderRadius.circular(radius),
             ),
             enabledBorder: UnderlineInputBorder(
@@ -160,7 +160,7 @@ class _AppTextFieldState extends State<AppTextField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
-              cursorColor: context.colorScheme.primary,
+              cursorColor: context.colorScheme.secondary,
               maxLength: widget.maxLength,
               controller: widget.controller,
               keyboardType:
@@ -192,7 +192,7 @@ class _AppTextFieldState extends State<AppTextField> {
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: context.colorScheme.primary),
+                  borderSide: BorderSide(color: context.colorScheme.secondary),
                   borderRadius: BorderRadius.circular(radius),
                 ),
                 enabledBorder: UnderlineInputBorder(
@@ -205,7 +205,7 @@ class _AppTextFieldState extends State<AppTextField> {
       );
 
   Widget _selectTextField() => TextFormField(
-        cursorColor: context.colorScheme.primary,
+        cursorColor: context.colorScheme.secondary,
         maxLength: widget.maxLength,
         controller: widget.controller,
         keyboardType: widget.inputType,
@@ -236,7 +236,7 @@ class _AppTextFieldState extends State<AppTextField> {
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: context.colorScheme.primary),
+            borderSide: BorderSide(color: context.colorScheme.secondary),
             borderRadius: BorderRadius.circular(radius),
           ),
           enabledBorder: UnderlineInputBorder(
@@ -271,7 +271,7 @@ class _AppTextFieldState extends State<AppTextField> {
       );
 
   Widget _regularTextField() => TextFormField(
-        cursorColor: context.colorScheme.primary,
+        cursorColor: context.colorScheme.secondary,
         maxLength: widget.maxLength,
         controller: widget.controller,
         keyboardType: widget.inputType,
@@ -299,7 +299,7 @@ class _AppTextFieldState extends State<AppTextField> {
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: context.colorScheme.primary),
+              borderSide: BorderSide(color: context.colorScheme.secondary),
               borderRadius: BorderRadius.circular(radius),
             ),
             enabledBorder: UnderlineInputBorder(
@@ -310,7 +310,7 @@ class _AppTextFieldState extends State<AppTextField> {
       );
 
   Widget _phoneTextField() => TextFormField(
-        cursorColor: context.colorScheme.primary,
+        cursorColor: context.colorScheme.secondary,
         maxLength: widget.maxLength,
         controller: widget.controller,
         keyboardType: TextInputType.phone,
@@ -343,7 +343,7 @@ class _AppTextFieldState extends State<AppTextField> {
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: context.colorScheme.primary),
+            borderSide: BorderSide(color: context.colorScheme.secondary),
             borderRadius: BorderRadius.circular(radius),
           ),
           enabledBorder: UnderlineInputBorder(
@@ -355,7 +355,7 @@ class _AppTextFieldState extends State<AppTextField> {
       );
 
   Widget _passwordTextField() => TextFormField(
-        cursorColor: context.colorScheme.primary,
+        cursorColor: context.colorScheme.secondary,
         maxLength: widget.maxLength,
         controller: widget.controller,
         keyboardType: widget.inputType,
@@ -386,7 +386,7 @@ class _AppTextFieldState extends State<AppTextField> {
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: context.colorScheme.primary),
+              borderSide: BorderSide(color: context.colorScheme.secondary),
               borderRadius: BorderRadius.circular(radius),
             ),
             enabledBorder: UnderlineInputBorder(
@@ -438,7 +438,7 @@ class AppDropdownField extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16),
         child: TextFormField(
-          cursorColor: context.colorScheme.primary,
+          cursorColor: context.colorScheme.secondary,
           controller: TextEditingController(text: current),
           readOnly: true,
           onTap: null,
@@ -462,7 +462,7 @@ class AppDropdownField extends StatelessWidget {
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: context.colorScheme.primary),
+              borderSide: BorderSide(color: context.colorScheme.secondary),
               borderRadius: BorderRadius.circular(radius),
             ),
             enabledBorder: UnderlineInputBorder(

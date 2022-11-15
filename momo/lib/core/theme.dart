@@ -101,7 +101,7 @@ class ThemeConfig {
         scaffoldBackgroundColor: const Color(0xff131313),
         colorScheme: const ColorScheme.dark(
           primary: Color(0xffF5CE5E),
-          primaryContainer: Color(0xffF5CE5E),
+          primaryContainer: Color(0xffead196),
           secondary: Color(0xff6D19AE),
           secondaryContainer: Color(0xff6D19AE),
           tertiary: Color(0xff232323),

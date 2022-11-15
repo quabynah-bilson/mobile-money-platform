@@ -25,6 +25,7 @@ const kAuthRequired = 'Sign in to access your notes';
 const kRadiusSmall = 8.0;
 const kRadiusMedium = 16.0;
 const kRadiusLarge = 40.0;
+const kRadiusLargest = 100.0;
 
 /// opacity
 const kEmphasisHigh = 0.85;

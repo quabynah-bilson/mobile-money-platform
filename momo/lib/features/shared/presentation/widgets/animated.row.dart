@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:momo/core/constants.dart';
 
 import 'animated.column.dart';
 
@@ -23,7 +24,8 @@ class AnimatedRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (animateType == AnimateType.slideUp) {
+    if (animateType == AnimateType.slideUp ||
+        animateType == AnimateType.slideBottom) {
       return AnimationLimiter(
         child: Row(
           mainAxisAlignment: mainAxisAlignment,
@@ -32,7 +34,9 @@ class AnimatedRow extends StatelessWidget {
           children: AnimationConfiguration.toStaggeredList(
             duration: Duration(milliseconds: duration),
             childAnimationBuilder: (widget) => SlideAnimation(
-              verticalOffset: 50.0,
+              verticalOffset: animateType == AnimateType.slideBottom
+                  ? -kListSlideOffset
+                  : kListSlideOffset,
               child: SlideAnimation(child: widget),
             ),
             children: children,
@@ -48,7 +52,9 @@ class AnimatedRow extends StatelessWidget {
           children: AnimationConfiguration.toStaggeredList(
             duration: Duration(milliseconds: duration),
             childAnimationBuilder: (widget) => SlideAnimation(
-              horizontalOffset: animateType == AnimateType.slideLeft ? 50.0 : -50.0,
+              horizontalOffset: animateType == AnimateType.slideLeft
+                  ? kListSlideOffset
+                  : -kListSlideOffset,
               child: FadeInAnimation(child: widget),
             ),
             children: children,

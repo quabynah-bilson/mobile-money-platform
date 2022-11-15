@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:momo/core/constants.dart';
 import 'package:momo/core/router/route.gr.dart';
 import 'package:momo/core/theme.dart';
@@ -24,7 +23,7 @@ class _MomoAppState extends State<MomoApp> {
           title: kAppName,
           theme: ThemeConfig.kLightThemeData(context),
           darkTheme: ThemeConfig.kDarkThemeData(context),
-          themeMode: ThemeMode.system,
+          themeMode: ThemeMode.dark,
           routerDelegate: _router.delegate(),
           routeInformationParser: _router.defaultRouteParser(),
         ),
