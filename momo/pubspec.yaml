@@ -1,0 +1,50 @@
+name: momo
+description: A mobile money platform
+
+publish_to: 'none'
+
+version: 0.0.0+0
+
+environment:
+  sdk: '>=2.18.4 <3.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  google_fonts: ^3.0.1
+  bloc: ^8.1.0
+  flutter_bloc: ^8.1.1
+  lottie: ^2.0.0
+  flutter_staggered_animations: ^1.1.1
+  shared_preferences: ^2.0.15
+  date_time_format: ^2.0.1
+  copy_with_extension: ^4.0.4
+  json_annotation: ^4.7.0
+  dartz: ^0.10.1
+  dio: ^4.0.6
+  uuid: ^3.0.7
+  pinput: ^2.2.16
+  cached_network_image: ^3.2.2
+  url_launcher: ^6.1.6
+  number_display: ^3.0.0
+  tab_container: ^2.0.0
+  package_info_plus: ^1.4.3+1
+  new_version: ^0.3.1
+  flutter_config: ^2.0.0
+  flutter_staggered_grid_view: ^0.6.2
+  get_it: ^7.2.0
+  logger: ^1.1.0
+  flutter_tabler_icons: ^1.1.2
+  flutter_multi_formatter: ^2.2.1
+  animated_bottom_navigation_bar: ^1.1.0
+  timeago_flutter: ^1.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true

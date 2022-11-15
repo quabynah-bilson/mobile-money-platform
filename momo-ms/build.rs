@@ -1,0 +1,2 @@
+// file generator
+fn main() {}
