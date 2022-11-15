@@ -3,9 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ThemeConfig {
   static const kOrange = Colors.orange,
+      kWhite = Colors.white,
       kAmber = Colors.amber,
       kGreen = Colors.green,
-      kBlue = Colors.lightBlue,
+      kBlue = Color(0xff3883FB),
+      kPurple = Color(0xff822FD3),
       kRed = Colors.red;
 
   static const _defaultFont = GoogleFonts.spaceGrotesk,
@@ -17,15 +19,15 @@ class ThemeConfig {
             color: textColor, fontWeight: FontWeight.w300, letterSpacing: -1.5),
         headline2: _defaultFont(
             color: textColor, fontWeight: FontWeight.w400, letterSpacing: -0.5),
-        headline3: _defaultFont(color: textColor, fontWeight: FontWeight.w600),
+        headline3: _tertiaryFont(color: textColor, fontWeight: FontWeight.w600),
         headline4: _tertiaryFont(
             color: textColor, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-        headline5: _defaultFont(
+        headline5: _tertiaryFont(
           color: textColor,
           fontWeight: FontWeight.bold,
         ),
-        headline6: _defaultFont(
-            color: textColor, fontWeight: FontWeight.w500, letterSpacing: 0.15),
+        headline6: _tertiaryFont(
+            color: textColor, fontWeight: FontWeight.w700, letterSpacing: 0.15),
         subtitle1: _tertiaryFont(
             color: textColor, fontWeight: FontWeight.w700, letterSpacing: 0.15),
         subtitle2: _secondaryFont(
