@@ -51,16 +51,16 @@ class AppRoundedButton extends StatelessWidget {
         ? SwipeButton(
             trackPadding: const EdgeInsets.all(8),
             activeTrackColor:
-                backgroundColor ?? context.colorScheme.onSecondary,
-            activeThumbColor: textColor ?? context.colorScheme.secondary,
+                backgroundColor ?? context.colorScheme.onPrimary,
+            activeThumbColor: textColor ?? context.colorScheme.primary,
             height: kToolbarHeight * 1.2,
             onSwipe: onTap,
             thumb: Icon(icon ?? TablerIcons.arrow_move_right,
-                color: backgroundColor ?? context.colorScheme.onSecondary),
+                color: backgroundColor ?? context.colorScheme.onPrimary),
             child: Text(
               text,
               style: context.theme.textTheme.button
-                  ?.copyWith(color: textColor ?? context.colorScheme.secondary),
+                  ?.copyWith(color: textColor ?? context.colorScheme.primary),
             ),
           )
         : SizedBox(

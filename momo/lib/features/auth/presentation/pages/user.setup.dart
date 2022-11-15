@@ -52,10 +52,10 @@ class _UserSetupPageState extends State<UserSetupPage> {
                     controller: _nameController,
                     capitalization: TextCapitalization.words,
                     action: TextInputAction.go,
-                    inputType: TextInputType.name,
                     onChange: (input) => setState(
                         () => UserSessionHandler.kUsername = input?.trim()),
                     validator: Validators.validate,
+                    autofocus: true,
                   ),
                 ),
                 AppRoundedButton(

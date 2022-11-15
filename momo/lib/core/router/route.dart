@@ -4,6 +4,7 @@ import 'package:momo/features/auth/presentation/pages/verify.pin.dart';
 import 'package:momo/features/money.transfer/presentation/pages/add.wallet.dart';
 import 'package:momo/features/money.transfer/presentation/pages/wallet.details.dart';
 import 'package:momo/features/shared/presentation/pages/dashboard.dart';
+import 'package:momo/features/shared/presentation/pages/dashboard.options.dart';
 import 'package:momo/features/shared/presentation/pages/onboarding.dart';
 import 'package:momo/features/shared/presentation/pages/verify.otp.dart';
 
@@ -13,6 +14,7 @@ import 'package:momo/features/shared/presentation/pages/verify.otp.dart';
     /// shared
     AutoRoute(page: OnboardingPage, initial: true),
     AutoRoute(page: DashboardPage),
+    AutoRoute(page: DashboardOptionsPage),
     AutoRoute(page: VerifyOtpPage),
 
     /// auth

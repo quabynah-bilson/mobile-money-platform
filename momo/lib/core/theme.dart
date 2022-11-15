@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:momo/core/constants.dart';
 
 class ThemeConfig {
   static const kOrange = Colors.orange,
@@ -26,7 +25,7 @@ class ThemeConfig {
             color: textColor, fontWeight: FontWeight.w400, letterSpacing: 0.25),
         headline5: _tertiaryFont(color: textColor),
         headline6: _tertiaryFont(
-            color: textColor, fontWeight: FontWeight.w700, letterSpacing: 0.15),
+            color: textColor, fontWeight: FontWeight.w500, letterSpacing: 0.15),
         subtitle1: _tertiaryFont(
             color: textColor, fontWeight: FontWeight.w700, letterSpacing: 0.15),
         subtitle2: _secondaryFont(
@@ -47,7 +46,7 @@ class ThemeConfig {
       ThemeData.light(useMaterial3: true).copyWith(
         textTheme: _kDefaultTextTheme(Colors.black),
         scaffoldBackgroundColor: Colors.white,
-        colorScheme:  const ColorScheme.dark(
+        colorScheme: const ColorScheme.dark(
           primary: Color(0xffF5CE5E),
           primaryContainer: Color(0xffF5CE5E),
           secondary: Color(0xff161616),

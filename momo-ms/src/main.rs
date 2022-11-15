@@ -1,6 +1,8 @@
 use actix_web::{App, HttpServer, middleware::Logger};
 
-use api::auth::login;
+// APIs
+use api::auth;
+use api::money_transfer;
 
 mod api;
 
@@ -16,7 +18,7 @@ async fn main() -> std::io::Result<()> {
         let logger = Logger::default();
         App::new()
             .wrap(logger)
-            .service(login)
+            .service(auth::login)
     })
         .bind(("0.0.0.0", 9999))?
         .run()

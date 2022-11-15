@@ -70,6 +70,8 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   onTap: _validateVerificationCode,
                   enabled: !_loading,
                   buttonType: AppButtonType.swipeable,
+                  backgroundColor: context.colorScheme.secondary,
+                  textColor: context.colorScheme.onSecondary,
                 ),
                 const SizedBox(height: 24),
                 Center(

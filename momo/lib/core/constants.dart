@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:logger/logger.dart';
 import 'package:new_version/new_version.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 /// for debugging
 final logger = Logger();
@@ -38,7 +39,7 @@ const kEmphasisNoteBackground = 0.25;
 const kEmphasisLowest = 0.1;
 
 /// animations & transitions
-const kSampleDelay = Duration(seconds: 3);
+const kSampleDelay = Duration(seconds: 2);
 const kScrollAnimationDuration = Duration(milliseconds: 150);
 const kListAnimationDuration = Duration(milliseconds: 550);
 const kGridAnimationDuration = Duration(milliseconds: 850);
@@ -52,5 +53,17 @@ const kUserIdKey = 'momo-id-key';
 
 String formatAmount(double value) {
   return toCurrencyString('$value',
-      leadingSymbol: kCurrency/*, useSymbolPadding: true*/);
+      leadingSymbol: kCurrency /*, useSymbolPadding: true*/);
+}
+
+/// call customer care for support
+Future<void> callCustomerCare() async {
+  try {
+    var urlString = 'tel:100';
+    if (await canLaunchUrlString(urlString)) {
+      await launchUrlString(urlString);
+    }
+  } catch (e) {
+    logger.e(e);
+  }
 }

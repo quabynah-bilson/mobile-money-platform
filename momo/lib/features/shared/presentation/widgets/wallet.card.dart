@@ -60,16 +60,17 @@ class WalletCard extends StatelessWidget {
                 children: [
                   Text(
                     accountProvider.toUpperCase(),
-                    style:  (type == WalletType.normal
-                        ? context.theme.textTheme.subtitle1
-                        : context.theme.textTheme.subtitle2)?.copyWith(
-                        color: (foreground ?? ThemeConfig.kWhite)
-                            .withOpacity(kEmphasisMedium)),
+                    style: (type == WalletType.normal
+                            ? context.theme.textTheme.subtitle1
+                            : context.theme.textTheme.subtitle2)
+                        ?.copyWith(
+                            color: (foreground ?? ThemeConfig.kWhite)
+                                .withOpacity(kEmphasisLow)),
                   ),
                   Text(
                     accountHolder.toUpperCase(),
                     style: (type == WalletType.normal
-                            ? context.theme.textTheme.headline5
+                            ? context.theme.textTheme.headline6
                             : context.theme.textTheme.subtitle1)
                         ?.copyWith(color: foreground ?? ThemeConfig.kWhite),
                   ),

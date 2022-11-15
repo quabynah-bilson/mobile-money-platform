@@ -73,6 +73,8 @@ class _VerifyPinPageState extends State<VerifyPinPage> {
                   onTap: _validatePin,
                   enabled: !_loading,
                   buttonType: AppButtonType.swipeable,
+                  backgroundColor: context.colorScheme.secondary,
+                  textColor: context.colorScheme.onSecondary,
                 ),
                 const SizedBox(height: 24),
                 Center(
