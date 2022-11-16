@@ -8,7 +8,6 @@ import 'package:momo/core/constants.dart';
 import 'package:momo/core/extensions.dart';
 import 'package:momo/core/router/route.gr.dart';
 import 'package:momo/core/theme.dart';
-import 'package:momo/core/user.session.dart';
 import 'package:momo/features/shared/presentation/widgets/animated.column.dart';
 import 'package:momo/features/shared/presentation/widgets/animated.row.dart';
 import 'package:momo/features/shared/presentation/widgets/rounded.button.dart';
@@ -140,10 +139,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           AppRoundedButton(
                             text: 'Get started',
                             onTap: () => context.router.pushAndPopUntil(
-                                UserSessionHandler.kIsLoggedIn
-                                    ? const DashboardRoute()
-                                    : const UserSetupRoute(),
-                                // const DashboardRoute(),
+                                // UserSessionHandler.kIsLoggedIn
+                                //     ? const DashboardRoute()
+                                //     : const UserSetupRoute(),
+                                // todo => get login status
+                                const DashboardRoute(),
                                 predicate: (_) => false),
                             buttonType: AppButtonType.swipeable,
                             backgroundColor: context.colorScheme.primary,

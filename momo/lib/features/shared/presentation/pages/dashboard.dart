@@ -2,13 +2,11 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:momo/core/constants.dart';
 import 'package:momo/core/extensions.dart';
-import 'package:momo/core/injector.dart';
 import 'package:momo/core/modals.dart';
 import 'package:momo/core/router/route.gr.dart';
 import 'package:momo/features/shared/domain/entities/wallet/wallet.dart';
@@ -35,13 +33,6 @@ class _DashboardPageState extends State<DashboardPage> {
     super.initState();
     doAfterDelay(() async {
       if (_wallets.isNotEmpty) setState(() => _currentWallet = _wallets.first);
-      try {
-        var response = await getIt.get<Dio>().post('/auth/login',
-            data: {'phone_number': 'dennis', 'pin': 'strong_password'});
-        logger.i('returned => ${response.data}');
-      } on DioError catch (e) {
-        logger.e(e);
-      }
     });
   }
 

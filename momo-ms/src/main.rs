@@ -1,10 +1,14 @@
+extern crate core;
+
 use actix_web::{middleware::Logger, App, HttpServer};
 
 // APIs
-use api::auth;
+use api::{auth, common, money_transfer};
 
 mod api;
 mod db;
+mod model;
+mod utils;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -16,7 +20,30 @@ async fn main() -> std::io::Result<()> {
     // setup server
     HttpServer::new(|| {
         let logger = Logger::default();
-        App::new().wrap(logger).service(auth::login)
+        App::new()
+            .wrap(logger)
+            // auth
+            .service(auth::login)
+            .service(auth::change_pin)
+            .service(auth::verify_otp)
+            .service(auth::send_otp)
+            .service(auth::register)
+            // common
+            .service(common::get_offers)
+            .service(common::get_banks)
+            // money transfer
+            .service(money_transfer::get_airtime_reversals)
+            .service(money_transfer::schedule_transaction)
+            .service(money_transfer::allow_cashout)
+            .service(money_transfer::send_money)
+            .service(money_transfer::buy_bundle)
+            .service(money_transfer::approvals)
+            .service(money_transfer::get_transactions)
+            .service(money_transfer::pay_bills)
+            .service(money_transfer::get_statement)
+            .service(money_transfer::get_wallets)
+            .service(money_transfer::create_wallet)
+            .service(money_transfer::delete_wallet)
     })
     .bind(("0.0.0.0", 9999))?
     .run()

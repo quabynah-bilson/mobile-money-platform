@@ -1,6 +1,9 @@
+use serde::{Deserialize, Serialize};
+
 // API response model
+#[derive(Serialize, Deserialize)]
 pub struct ApiResponse<T> {
-    success: bool,
-    payload: T,
-    message: String,
+    pub success: bool,
+    pub payload: T,
+    pub message: String,
 }
