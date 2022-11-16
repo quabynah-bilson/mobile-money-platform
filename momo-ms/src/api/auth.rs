@@ -1,5 +1,5 @@
 use actix_web::{delete, post, web::Json};
-use mongodb::bson::{doc, oid, to_bson, DateTime, Document};
+use mongodb::bson::{DateTime, doc, Document, oid, to_bson};
 use serde::{Deserialize, Serialize};
 
 use crate::api::response::ApiResponse;
@@ -115,9 +115,9 @@ pub async fn verify_otp(request: Json<LoginRequest>) -> Json<ApiResponse<String>
         .unwrap();
 
     return if response.is_some() {
-        let code = response.unwrap().get("code").unwrap().to_string();
+        let code = response.unwrap().get("code").unwrap().to_string().replace("\"", "");
         let message;
-        if code == request.pin {
+        if code.eq(&*request.pin) {
             message = "Verification completed successfully".to_string();
             // delete verification
             collection
@@ -209,6 +209,7 @@ pub async fn delete_otp(request: Json<SendOtpRequest>) -> Json<ApiResponse<Strin
     });
 }
 
+// todo => implement later
 #[post("/auth/change-pin")]
 pub async fn change_pin(_: Json<ChangePinRequest>) -> Json<ApiResponse<String>> {
     return Json(ApiResponse {
