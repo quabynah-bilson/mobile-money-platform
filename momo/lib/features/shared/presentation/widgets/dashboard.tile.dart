@@ -6,6 +6,7 @@ import 'package:momo/core/extensions.dart';
 class DashboardActionTile extends StatelessWidget {
   final String label;
   final IconData icon;
+  final bool active;
   final void Function()? onTap;
 
   const DashboardActionTile({
@@ -13,14 +14,18 @@ class DashboardActionTile extends StatelessWidget {
     required this.label,
     required this.icon,
     this.onTap,
+    this.active = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: onTap ?? () => context.showSnackBar(kFeatureUnderDev),
-        child: Container(
+        child: AnimatedContainer(
+          duration: kScrollAnimationDuration,
           decoration: BoxDecoration(
-            color: context.colorScheme.surface.withOpacity(kEmphasisMedium),
+            color: active
+                ? context.colorScheme.secondary
+                : context.colorScheme.surface.withOpacity(kEmphasisMedium),
             borderRadius: BorderRadius.circular(kRadiusMedium),
             border: Border.all(
               color: context.theme.disabledColor.withOpacity(kEmphasisLow),
@@ -32,12 +37,19 @@ class DashboardActionTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, color: context.colorScheme.secondary, size: 40),
+              Icon(icon,
+                  color: active
+                      ? context.colorScheme.onSecondary
+                      : context.colorScheme.secondary,
+                  size: 40),
               const SizedBox(height: 12),
               Text(
                 label,
-                style: context.theme.textTheme.subtitle2
-                    ?.copyWith(color: context.colorScheme.onSurface),
+                style: context.theme.textTheme.subtitle2?.copyWith(
+                    color: active
+                        ? context.colorScheme.onSecondary
+                            .withOpacity(kEmphasisMedium)
+                        : context.colorScheme.onSurface),
                 textAlign: TextAlign.center,
               ),
             ],

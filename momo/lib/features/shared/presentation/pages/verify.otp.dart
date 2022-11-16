@@ -47,6 +47,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                   'Enter the verification code sent to ${widget.phoneNumber}',
                   style: context.theme.textTheme.headline5
                       ?.copyWith(color: context.colorScheme.onPrimary),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: context.height * 0.1),
                 Form(

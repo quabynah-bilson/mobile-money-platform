@@ -48,6 +48,7 @@ class _VerifyPinPageState extends State<VerifyPinPage> {
                   'Enter the mobile money PIN associated with ${widget.phoneNumber}',
                   style: context.theme.textTheme.headline5
                       ?.copyWith(color: context.colorScheme.onPrimary),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: context.height * 0.1),
                 Form(

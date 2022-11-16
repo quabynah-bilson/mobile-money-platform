@@ -69,8 +69,8 @@ class _AddWalletPageState extends State<AddWalletPage> {
                         textFieldType: AppTextFieldType.phone,
                         enabled: !_loading,
                         autofocus: true,
-                        onChange: (input) => setState(() =>
-                            UserSessionHandler.kPhoneNumber = input?.trim()),
+                        onChange: (input) => setState(() => UserSessionHandler
+                            .kPhoneNumber = input?.replaceAll(' ', '').trim()),
                         validator: Validators.validate,
                       ),
                     ],

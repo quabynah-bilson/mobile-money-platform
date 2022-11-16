@@ -54,7 +54,8 @@ class _DashboardPageState extends State<DashboardPage> {
         /// logo & actions
         appBar: AppBar(
           centerTitle: false,
-          backgroundColor: context.colorScheme.primary.withOpacity(kEmphasisNone),
+          backgroundColor:
+              context.colorScheme.primary.withOpacity(kEmphasisNone),
           title: GestureDetector(
             onTap: () => showProfileSheetWithOptions(context),
             child: Container(
@@ -176,6 +177,8 @@ class _DashboardPageState extends State<DashboardPage> {
                             _buildActionButton(
                               label: 'Top up',
                               icon: TablerIcons.phone_call,
+                              onTap: () => context.router
+                                  .push(const BundlePurchaseRoute()),
                             ),
                             _buildActionButton(
                               label: 'Send',
@@ -245,9 +248,11 @@ class _DashboardPageState extends State<DashboardPage> {
                                     label: 'Bills',
                                     icon: TablerIcons.receipt,
                                   ),
-                                  const DashboardActionTile(
+                                  DashboardActionTile(
                                     label: 'Bundles',
-                                    icon: TablerIcons.network,
+                                    icon: TablerIcons.wifi,
+                                    onTap: () => context.router
+                                        .push(const BundlePurchaseRoute()),
                                   ),
                                   const DashboardActionTile(
                                     label: 'Bank Services',

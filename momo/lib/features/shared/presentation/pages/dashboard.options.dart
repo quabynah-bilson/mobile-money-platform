@@ -35,12 +35,28 @@ class _DashboardOptionsPageState extends State<DashboardOptionsPage> {
                 sliver: SliverGrid(
                   delegate: SliverChildListDelegate(
                     AnimationConfiguration.toStaggeredList(
-                      duration: kGridAnimationDuration,
+                      duration: kListAnimationDuration,
                       childAnimationBuilder: (child) => SlideAnimation(
                         verticalOffset: kListSlideOffset,
                         child: FadeInAnimation(child: child),
                       ),
                       children: [
+                        const DashboardActionTile(
+                          label: 'Savings',
+                          icon: TablerIcons.shopping_cart_discount,
+                        ),
+                        const DashboardActionTile(
+                          label: 'Pensions',
+                          icon: TablerIcons.credit_card,
+                        ),
+                        const DashboardActionTile(
+                          label: 'Treasury Bill',
+                          icon: TablerIcons.receipt_tax,
+                        ),
+                        const DashboardActionTile(
+                          label: 'Insure',
+                          icon: TablerIcons.shield_lock,
+                        ),
                         const DashboardActionTile(
                           label: 'Favorites',
                           icon: TablerIcons.heart_plus,
