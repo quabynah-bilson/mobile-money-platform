@@ -106,12 +106,46 @@ pub async fn login(request: Json<LoginRequest>) -> Json<ApiResponse<Option<MomoU
 }
 
 #[post("/auth/verify-otp")]
-pub async fn verify_otp(_: Json<LoginRequest>) -> Json<ApiResponse<String>> {
-    return Json(ApiResponse {
-        message: String::from(format!("Not implemented")),
-        success: false,
-        payload: String::from(""),
-    });
+pub async fn verify_otp(request: Json<LoginRequest>) -> Json<ApiResponse<String>> {
+    let client = config::connect().await.unwrap();
+    let collection = client.database(DB_NAME).collection::<Document>(SMS_COL);
+    let response = collection
+        .find_one(doc! {"phone_number" : request.phone_number.as_str()}, None)
+        .await
+        .unwrap();
+
+    return if response.is_some() {
+        let code = response.unwrap().get("code").unwrap().to_string();
+        let message;
+        if code == request.pin {
+            message = "Verification completed successfully".to_string();
+            // delete verification
+            collection
+                .delete_one(
+                    doc! {"phone_number" : request.phone_number.to_string()},
+                    None,
+                )
+                .await
+                .unwrap();
+        } else {
+            message = "Verification failed. Try again".to_string();
+        }
+
+        Json(ApiResponse {
+            message,
+            success: code == request.pin,
+            payload: "".to_string(),
+        })
+    } else {
+        Json(ApiResponse {
+            message: format!(
+                "Verification code does not exist for {}",
+                request.phone_number.to_string()
+            ),
+            success: false,
+            payload: "".to_string(),
+        })
+    };
 }
 
 #[post("/auth/send-otp")]
