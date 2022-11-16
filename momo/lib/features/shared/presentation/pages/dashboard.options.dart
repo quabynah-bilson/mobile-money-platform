@@ -45,13 +45,16 @@ class _DashboardOptionsPageState extends State<DashboardOptionsPage> {
                           label: 'Favorites',
                           icon: TablerIcons.heart_plus,
                         ),
-                        const DashboardActionTile(
+                        DashboardActionTile(
                           label: 'Airtime reversals',
                           icon: TablerIcons.arrow_back,
+                          onTap: () => context
+                              .showSnackBar(kAirtimeReversalErrorMessage),
                         ),
-                        const DashboardActionTile(
+                        DashboardActionTile(
                           label: 'Statements',
                           icon: TablerIcons.notes,
+                          onTap: () => showStatementsSheet(context),
                         ),
                         const DashboardActionTile(
                           label: 'Change PIN',

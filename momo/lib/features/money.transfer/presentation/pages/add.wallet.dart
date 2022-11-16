@@ -68,6 +68,7 @@ class _AddWalletPageState extends State<AddWalletPage> {
                         action: TextInputAction.next,
                         textFieldType: AppTextFieldType.phone,
                         enabled: !_loading,
+                        autofocus: true,
                         onChange: (input) => setState(() =>
                             UserSessionHandler.kPhoneNumber = input?.trim()),
                         validator: Validators.validate,

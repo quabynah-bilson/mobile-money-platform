@@ -24,6 +24,8 @@ const kAppOnboardingImage = 'assets/user_with_phone_in_hand.webp';
 const kFeatureUnderDev =
     'This feature will be available in the next major release';
 const kAuthRequired = 'Sign in to access your notes';
+const kReceiveMomoPromptMessage = 'You will receive a mobile money prompt soon';
+final kAirtimeReversalErrorMessage = 'The minimum amount for airtime reversal is ${formatAmount(10)}';
 
 /// radius
 const kRadiusSmall = 8.0;

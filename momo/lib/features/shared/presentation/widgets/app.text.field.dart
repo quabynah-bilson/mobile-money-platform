@@ -1,12 +1,14 @@
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:momo/core/constants.dart';
 import 'package:momo/core/extensions.dart';
 
-enum AppTextFieldType { regular, phone, password, select, currency, card }
+enum AppTextFieldType { regular, phone, password, select, currency, card, date }
 
 class AppTextField extends StatefulWidget {
   final String label;
+  final String hint;
   final bool readOnly;
   final bool showCurrency;
   final String? initialValue;
@@ -14,6 +16,8 @@ class AppTextField extends StatefulWidget {
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final void Function(String?)? onChange;
+  final void Function(String?)? onSubmit;
+  final void Function(DateTime)? onDatePicked;
   final Function(String?)? onSave;
   final AppTextFieldType textFieldType;
   final Widget? suffixIcon;
@@ -29,6 +33,8 @@ class AppTextField extends StatefulWidget {
   final TextCapitalization capitalization;
   final int? maxLength;
   final int? maxLines;
+  final Widget? prefixIcon;
+  final DateTimePickerType datePickerType;
 
   const AppTextField(
     this.label, {
@@ -38,12 +44,16 @@ class AppTextField extends StatefulWidget {
     this.onTap,
     this.focusNode,
     this.suffixIcon,
+    this.prefixIcon,
     this.onPrefixIconTapped,
     this.prefixIconUrl,
     this.onChange,
+    this.onSubmit,
+    this.onDatePicked,
     this.onSave,
     this.maxLength,
     this.maxLines,
+    this.hint = '',
     this.readOnly = false,
     this.autofocus = false,
     this.showCurrency = false,
@@ -55,6 +65,7 @@ class AppTextField extends StatefulWidget {
     this.inputType = TextInputType.text,
     this.action = TextInputAction.done,
     this.capitalization = TextCapitalization.none,
+    this.datePickerType = DateTimePickerType.date,
   }) : super(key: key);
 
   @override
@@ -92,6 +103,11 @@ class _AppTextFieldState extends State<AppTextField> {
           padding: EdgeInsets.only(bottom: widget.bottom),
           child: _cardTextField(),
         );
+      case AppTextFieldType.date:
+        return Padding(
+          padding: EdgeInsets.only(bottom: widget.bottom),
+          child: _dateTextField(),
+        );
       default:
         return Padding(
           padding: EdgeInsets.only(bottom: widget.bottom),
@@ -99,6 +115,78 @@ class _AppTextFieldState extends State<AppTextField> {
         );
     }
   }
+
+  Widget _dateTextField() => DateTimePicker(
+        firstDate: DateTime(DateTime.now().year),
+        lastDate: DateTime.now(),
+        calendarTitle: kAppName,
+        initialTime: TimeOfDay.now(),
+        initialDatePickerMode: DatePickerMode.day,
+        use24HourFormat: false,
+        locale: const Locale("en"),
+        dateLabelText: widget.label,
+        onChanged: (input) {
+          if (widget.onDatePicked == null) return;
+          var now = DateTime.now();
+
+          if (widget.datePickerType == DateTimePickerType.time) {
+            final llTime = input.split(':');
+            var time = TimeOfDay(
+                hour: int.tryParse(llTime[0]) ?? 0,
+                minute: int.tryParse(llTime[1]) ?? 0);
+            var timestamp =
+                DateTime(now.year, now.month, now.day, time.hour, time.minute);
+            widget.onDatePicked!(timestamp);
+          } else {
+            var timestamp = DateTime(now.year, now.month, now.day, 0, 0);
+            widget.onDatePicked!(timestamp);
+          }
+        },
+        validator: widget.validator,
+        onSaved: widget.onSave,
+        controller: widget.controller,
+        enabled: widget.enabled,
+        autofocus: widget.autofocus,
+        focusNode: widget.focusNode,
+        onFieldSubmitted: widget.onSubmit,
+        textInputAction: widget.action,
+        icon: widget.prefixIcon,
+        type: widget.datePickerType,
+        readOnly: widget.readOnly,
+        maxLines: widget.maxLines ?? 1,
+        maxLength: widget.maxLength,
+        fieldHintText: widget.hint,
+        timeLabelText: widget.label,
+        timeHintText: widget.hint,
+        textCapitalization: widget.capitalization,
+        style: TextStyle(color: context.colorScheme.onSurface),
+        decoration: InputDecoration(
+          labelStyle: TextStyle(color: context.colorScheme.onSurface),
+          hintStyle:
+              TextStyle(color: context.colorScheme.onSurface.withOpacity(0.3)),
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.transparent),
+            borderRadius: BorderRadius.circular(radius),
+          ),
+          counter: const SizedBox.shrink(),
+          labelText: widget.label,
+          hintText: widget.hint,
+          filled: true,
+          fillColor: context.colorScheme.surface.withOpacity(kEmphasisMedium),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: context.colorScheme.secondary),
+            borderRadius: BorderRadius.circular(radius),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(radius),
+          ),
+          suffixIcon: widget.suffixIcon,
+          prefixIcon: widget.prefixIcon,
+        ),
+      );
 
   Widget _cardTextField() => TextFormField(
         cursorColor: context.colorScheme.primary,
@@ -188,7 +276,8 @@ class _AppTextFieldState extends State<AppTextField> {
                     color: context.colorScheme.onSurface
                         .withOpacity(kEmphasisMedium)),
                 filled: true,
-                fillColor: context.colorScheme.surface.withOpacity(kEmphasisMedium),
+                fillColor:
+                    context.colorScheme.surface.withOpacity(kEmphasisMedium),
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 focusedBorder: OutlineInputBorder(

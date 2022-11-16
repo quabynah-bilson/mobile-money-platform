@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:momo/core/app.dart';
 import 'package:momo/core/constants.dart';
 import 'package:momo/core/injector.dart';
 import 'package:new_version/new_version.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 /// entry point
 ///
@@ -12,11 +14,18 @@ import 'package:new_version/new_version.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  /// setup device orientation
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   /// load .env
   FlutterConfig.loadEnvVariables();
 
   /// setup dependencies
   await setupInjector();
+
+  /// initialize date formatting
+  await initializeDateFormatting("en", "");
 
   /// setup app versioning
   kAppVersionUpgrader =

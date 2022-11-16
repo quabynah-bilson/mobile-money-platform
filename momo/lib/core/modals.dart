@@ -1,11 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:momo/core/extensions.dart';
 import 'package:momo/core/user.session.dart';
+import 'package:momo/core/validator.dart';
 import 'package:momo/features/shared/presentation/widgets/animated.column.dart';
 import 'package:momo/features/shared/presentation/widgets/animated.list.dart';
+import 'package:momo/features/shared/presentation/widgets/app.text.field.dart';
+import 'package:momo/features/shared/presentation/widgets/loading.overlay.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'constants.dart';
@@ -244,6 +248,128 @@ Future<void> showProfileSheetWithOptions(BuildContext context) async {
             ),
           ),
         ],
+      ),
+    ),
+  );
+}
+
+/// statement sheet
+Future<void> showStatementsSheet(BuildContext context) async {
+  var statementTypes = const ['Detail Statement'],
+      selectedType = statementTypes.first,
+      loading = false,
+      dateController = TextEditingController(),
+      formKey = GlobalKey<FormState>();
+  String? emailAddress;
+
+  await showModalBottomSheet(
+    context: context,
+    clipBehavior: Clip.hardEdge,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topRight: Radius.circular(kRadiusLarge),
+        topLeft: Radius.circular(kRadiusLarge),
+      ),
+    ),
+    builder: (context) => StatefulBuilder(
+      builder: (context, setState) => SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: loading
+              ? const LoadingIndicatorItem(
+                  message: 'Preparing your statement...')
+              : AnimatedColumn(
+                  animateType: AnimateType.slideUp,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Welcome to $kAppName Statement',
+                      style: context.theme.textTheme.headline5?.copyWith(
+                        color: context.colorScheme.secondaryContainer,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+                    AppDropdownField(
+                      label: 'Statement Type',
+                      values: statementTypes,
+                      onSelected: (type) => setState(() => selectedType),
+                      current: selectedType,
+                      enabled: !loading,
+                    ),
+                    Text(
+                      'Provide an email address for the statement',
+                      style: context.theme.textTheme.subtitle2?.copyWith(
+                        color: context.colorScheme.onSurface
+                            .withOpacity(kEmphasisMedium),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 12),
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          AppTextField(
+                            'Current email address',
+                            enabled: !loading,
+                            validator: Validators.validateEmail,
+                            onChange: (input) =>
+                                setState(() => emailAddress = input?.trim()),
+                            inputType: TextInputType.emailAddress,
+                          ),
+                          Text(
+                            'Select start date (i.e. a maximum of two years history from the date of request)',
+                            style: context.theme.textTheme.subtitle2?.copyWith(
+                              color: context.colorScheme.onSurface
+                                  .withOpacity(kEmphasisMedium),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 12),
+                          AppTextField(
+                            'Date of request',
+                            controller: dateController,
+                            enabled: !loading,
+                            validator: Validators.validate,
+                            textFieldType: AppTextFieldType.date,
+                            onDatePicked: (dateTime) => setState(() =>
+                                dateController.text = dateTime.format('d m Y')),
+                            onChange: logger.i,
+                            inputType: TextInputType.emailAddress,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    FloatingActionButton.extended(
+                      heroTag: 'prepare-statement',
+                      enableFeedback: true,
+                      onPressed: () async {
+                        if (formKey.currentState != null &&
+                            formKey.currentState!.validate()) {
+                          // todo => send statement to user
+                          formKey.currentState?.save();
+                          setState(() => loading = !loading);
+                          await Future.delayed(kSampleDelay);
+                          context
+                            ..showSnackBar(kReceiveMomoPromptMessage)
+                            ..router.pop();
+                        }
+                      },
+                      label: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 24),
+                        child: Text('Proceed'),
+                      ),
+                      backgroundColor: context.colorScheme.secondary,
+                      foregroundColor: context.colorScheme.onSecondary,
+                    ),
+                  ],
+                ),
+        ),
       ),
     ),
   );
