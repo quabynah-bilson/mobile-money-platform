@@ -55,7 +55,7 @@ pub async fn register(request: Json<CreateUserRequest>) -> Json<ApiResponse<Opti
             payload: None,
         })
     } else {
-        let user = MomoUser {
+        let mut user = MomoUser {
             id: oid::ObjectId::new().to_hex(),
             display_name: request.display_name.to_string(),
             phone_number: request.phone_number.to_string(),
@@ -64,6 +64,7 @@ pub async fn register(request: Json<CreateUserRequest>) -> Json<ApiResponse<Opti
             last_login: DateTime::now(),
             status: MomoUserStatus::Pending.to_string(),
         };
+        user.hash_pin().unwrap();
         collection
             .insert_one(to_bson(&user).unwrap(), None)
             .await
@@ -88,10 +89,21 @@ pub async fn login(request: Json<LoginRequest>) -> Json<ApiResponse<Option<MomoU
 
     return if response.is_some() {
         let user = response.unwrap();
+        let verified = user.verify_pin(request.pin.as_bytes()).unwrap();
+        let message;
+        let payload;
+        if verified {
+            message = format!("signed in as {}", request.phone_number);
+            payload = Some(user);
+        } else {
+            message = "Login failed".to_string();
+            payload = None;
+        }
+
         Json(ApiResponse {
-            message: String::from(format!("signed in as {}", request.phone_number)),
-            success: true,
-            payload: Some(user),
+            message: message.to_string(),
+            success: verified,
+            payload,
         })
     } else {
         Json(ApiResponse {
@@ -115,7 +127,12 @@ pub async fn verify_otp(request: Json<LoginRequest>) -> Json<ApiResponse<String>
         .unwrap();
 
     return if response.is_some() {
-        let code = response.unwrap().get("code").unwrap().to_string().replace("\"", "");
+        let code = response
+            .unwrap()
+            .get("code")
+            .unwrap()
+            .to_string()
+            .replace("\"", "");
         let message;
         if code.eq(&*request.pin) {
             message = "Verification completed successfully".to_string();
