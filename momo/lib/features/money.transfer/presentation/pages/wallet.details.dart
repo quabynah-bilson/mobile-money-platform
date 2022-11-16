@@ -67,6 +67,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
           child: AnimationLimiter(
             child: CustomScrollView(
               shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
               slivers: [
                 /// wallet info
                 SliverToBoxAdapter(

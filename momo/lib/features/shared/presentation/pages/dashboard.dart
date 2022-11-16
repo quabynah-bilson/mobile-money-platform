@@ -37,7 +37,7 @@ class _DashboardPageState extends State<DashboardPage> {
       if (_wallets.isNotEmpty) setState(() => _currentWallet = _wallets.first);
       try {
         var response = await getIt.get<Dio>().post('/auth/login',
-            data: {'username': 'dennis', 'password': 'strong_password'});
+            data: {'phone_number': 'dennis', 'pin': 'strong_password'});
         logger.i('returned => ${response.data}');
       } on DioError catch (e) {
         logger.e(e);

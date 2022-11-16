@@ -317,6 +317,7 @@ Future<void> showStatementsSheet(BuildContext context) async {
                             'Current email address',
                             enabled: !loading,
                             validator: Validators.validateEmail,
+                            autofocus: true,
                             onChange: (input) =>
                                 setState(() => emailAddress = input?.trim()),
                             inputType: TextInputType.emailAddress,
