@@ -25,7 +25,11 @@ const kFeatureUnderDev =
     'This feature will be available in the next major release';
 const kAuthRequired = 'Sign in to access your notes';
 const kReceiveMomoPromptMessage = 'You will receive a mobile money prompt soon';
-final kAirtimeReversalErrorMessage = 'The minimum amount for airtime reversal is ${formatAmount(10)}';
+final kAirtimeReversalErrorMessage =
+    'The minimum amount for airtime reversal is ${formatAmount(10)}';
+
+/// error messages
+const kServerErrorMessage = 'Please connect to the internet and try again';
 
 /// radius
 const kRadiusSmall = 8.0;
@@ -57,6 +61,12 @@ const kUserIdKey = 'momo-id-key';
 String formatAmount(double value) {
   return toCurrencyString('$value',
       leadingSymbol: kCurrency /*, useSymbolPadding: true*/);
+}
+
+String formatPhoneNumber(String phoneNumber) {
+  phoneNumber = phoneNumber.replaceAll(' ', '');
+  phoneNumber = '+233${phoneNumber.substring(phoneNumber.length - 9)}';
+  return phoneNumber;
 }
 
 /// call customer care for support

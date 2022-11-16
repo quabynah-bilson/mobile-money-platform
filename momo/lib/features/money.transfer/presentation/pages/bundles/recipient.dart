@@ -69,7 +69,7 @@ class _SelectRecipientPageState extends State<_SelectRecipientPage> {
                   'Enter phone number',
                   controller: _numberController,
                   textFieldType: AppTextFieldType.phone,
-                  validator: Validators.validate,
+                  validator: Validators.validatePhone,
                   enabled: !widget.loading,
                   autofocus: true,
                 ),

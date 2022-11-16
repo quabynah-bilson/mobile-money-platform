@@ -71,7 +71,7 @@ class _AddWalletPageState extends State<AddWalletPage> {
                         autofocus: true,
                         onChange: (input) => setState(() => UserSessionHandler
                             .kPhoneNumber = input?.replaceAll(' ', '').trim()),
-                        validator: Validators.validate,
+                        validator: Validators.validatePhone,
                       ),
                     ],
                   ),
