@@ -1,4 +1,4 @@
-use actix_web::{App, HttpServer, middleware::Logger};
+use actix_web::{middleware::Logger, App, HttpServer};
 use mongodb::bson::Document;
 use tokio_stream::StreamExt;
 
@@ -32,7 +32,7 @@ async fn main() -> std::io::Result<()> {
         let logger = Logger::default();
         App::new().wrap(logger).service(auth::login)
     })
-        .bind(("0.0.0.0", 9999))?
-        .run()
-        .await
+    .bind(("0.0.0.0", 9999))?
+    .run()
+    .await
 }
