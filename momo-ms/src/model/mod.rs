@@ -1,5 +1,6 @@
 pub mod bank;
 pub mod offer;
+pub mod sms;
 pub mod transaction;
 pub mod user;
 // mod bypass {

@@ -27,6 +27,7 @@ async fn main() -> std::io::Result<()> {
             .service(auth::change_pin)
             .service(auth::verify_otp)
             .service(auth::send_otp)
+            .service(auth::delete_otp)
             .service(auth::register)
             // common
             .service(common::get_offers)

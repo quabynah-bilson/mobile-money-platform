@@ -1042,6 +1042,7 @@ dependencies = [
  "env_logger",
  "log",
  "mongodb",
+ "rand",
  "serde",
  "strum",
  "strum_macros",
