@@ -30,6 +30,7 @@ final kAirtimeReversalErrorMessage =
 
 /// error messages
 const kServerErrorMessage = 'Please connect to the internet and try again';
+const kAuthErrorMessage = 'Session has expired or you are not authenticated';
 
 /// radius
 const kRadiusSmall = 8.0;

@@ -28,37 +28,37 @@ class Wallet {
   Map<String, dynamic> toJson() => _$WalletToJson(this);
 }
 
-final kSampleWallets = [
-  Wallet(
-    id: const Uuid().v4(),
-    holder: 'Dennis Bilson',
-    provider: 'MTN',
-    phone: '+233554635701',
-    hashedPhone: '+233**701',
-    balance: 240.43,
-  ),
-  Wallet(
-    id: const Uuid().v4(),
-    holder: 'Belinda Darglo',
-    provider: 'MTN',
-    phone: '+233248160863',
-    hashedPhone: '+233**863',
-    balance: 1273.06,
-  ),
-  Wallet(
-    id: const Uuid().v4(),
-    holder: 'Quabynah Bilson',
-    provider: 'MTN',
-    phone: '+233554022344',
-    hashedPhone: '+233**344',
-    balance: 3455.3,
-  ),
-  Wallet(
-    id: const Uuid().v4(),
-    holder: 'Hermoso Tesoro',
-    provider: 'Vodafone',
-    phone: '+233207996951',
-    hashedPhone: '+233**951',
-    balance: 12.89,
-  ),
-];
+// final kSampleWallets = [
+//   Wallet(
+//     id: const Uuid().v4(),
+//     holder: 'Dennis Bilson',
+//     provider: 'MTN',
+//     phone: '+233554635701',
+//     hashedPhone: '+233**701',
+//     balance: 240.43,
+//   ),
+//   Wallet(
+//     id: const Uuid().v4(),
+//     holder: 'Belinda Darglo',
+//     provider: 'MTN',
+//     phone: '+233248160863',
+//     hashedPhone: '+233**863',
+//     balance: 1273.06,
+//   ),
+//   Wallet(
+//     id: const Uuid().v4(),
+//     holder: 'Quabynah Bilson',
+//     provider: 'MTN',
+//     phone: '+233554022344',
+//     hashedPhone: '+233**344',
+//     balance: 3455.3,
+//   ),
+//   Wallet(
+//     id: const Uuid().v4(),
+//     holder: 'Hermoso Tesoro',
+//     provider: 'Vodafone',
+//     phone: '+233207996951',
+//     hashedPhone: '+233**951',
+//     balance: 12.89,
+//   ),
+// ];

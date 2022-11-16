@@ -12,15 +12,19 @@ class MomoUser {
   @JsonKey(name: 'phone_number')
   final String phoneNumber;
   @JsonKey(name: 'last_login')
-  final DateTime lastLogin;
-  @JsonKey(name: 'network_id')
-  final String network;
+  final dynamic lastLogin;
 
   const MomoUser({
     required this.id,
     required this.name,
     required this.phoneNumber,
     required this.lastLogin,
-    required this.network,
   });
+
+  factory MomoUser.fromJson(json) => _$MomoUserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MomoUserToJson(this);
+
+  @override
+  String toString() => toJson().toString();
 }

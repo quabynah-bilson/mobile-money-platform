@@ -42,4 +42,8 @@ class AuthCubit extends Cubit<BlocState> {
       (r) => emit(BlocState<String>.errorState(failure: r)),
     );
   }
+
+  Future<void> logout() => _repo.logout();
+
+  Future<bool> getLoginStatus() => _repo.getLoginStatus();
 }

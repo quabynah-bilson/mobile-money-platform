@@ -13,7 +13,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i10;
 import 'package:flutter/material.dart' as _i11;
-import 'package:momo/features/auth/presentation/pages/user.setup.dart' as _i5;
+import 'package:momo/features/auth/presentation/pages/login.dart' as _i5;
 import 'package:momo/features/auth/presentation/pages/verify.pin.dart' as _i6;
 import 'package:momo/features/money.transfer/presentation/pages/add.wallet.dart'
     as _i7;
@@ -63,10 +63,10 @@ class MomoAppRouter extends _i10.RootStackRouter {
         ),
       );
     },
-    UserSetupRoute.name: (routeData) {
+    LoginRoute.name: (routeData) {
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i5.UserSetupPage(),
+        child: const _i5.LoginPage(),
       );
     },
     VerifyPinRoute.name: (routeData) {
@@ -122,8 +122,8 @@ class MomoAppRouter extends _i10.RootStackRouter {
           path: '/verify-otp-page',
         ),
         _i10.RouteConfig(
-          UserSetupRoute.name,
-          path: '/user-setup-page',
+          LoginRoute.name,
+          path: '/login-page',
         ),
         _i10.RouteConfig(
           VerifyPinRoute.name,
@@ -215,15 +215,15 @@ class VerifyOtpRouteArgs {
 }
 
 /// generated route for
-/// [_i5.UserSetupPage]
-class UserSetupRoute extends _i10.PageRouteInfo<void> {
-  const UserSetupRoute()
+/// [_i5.LoginPage]
+class LoginRoute extends _i10.PageRouteInfo<void> {
+  const LoginRoute()
       : super(
-          UserSetupRoute.name,
-          path: '/user-setup-page',
+          LoginRoute.name,
+          path: '/login-page',
         );
 
-  static const String name = 'UserSetupRoute';
+  static const String name = 'LoginRoute';
 }
 
 /// generated route for

@@ -19,7 +19,7 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   /// load .env
-  FlutterConfig.loadEnvVariables();
+  await FlutterConfig.loadEnvVariables();
 
   /// setup dependencies
   await setupInjector();

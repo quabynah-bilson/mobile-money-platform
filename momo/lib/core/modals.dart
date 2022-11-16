@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:momo/core/extensions.dart';
 import 'package:momo/core/user.session.dart';
 import 'package:momo/core/validator.dart';
+import 'package:momo/features/auth/presentation/manager/auth_cubit.dart';
 import 'package:momo/features/shared/presentation/widgets/animated.column.dart';
 import 'package:momo/features/shared/presentation/widgets/animated.list.dart';
 import 'package:momo/features/shared/presentation/widgets/app.text.field.dart';
@@ -97,7 +98,8 @@ Future<void> showAppDetailsSheet(BuildContext context) async {
 }
 
 /// show profile sheet with more options
-Future<void> showProfileSheetWithOptions(BuildContext context) async {
+Future<bool?> showProfileSheetWithOptions(BuildContext context) async {
+  var authCubit = AuthCubit();
   /// tile
   Widget buildTileAction(BuildContext context, String title, IconData icon,
           [void Function()? onTap]) =>
@@ -124,7 +126,7 @@ Future<void> showProfileSheetWithOptions(BuildContext context) async {
         ),
       );
 
-  await showModalBottomSheet(
+  return await showModalBottomSheet<bool>(
     context: context,
     clipBehavior: Clip.hardEdge,
     isScrollControlled: true,
@@ -155,7 +157,7 @@ Future<void> showProfileSheetWithOptions(BuildContext context) async {
 
                 /// username
                 Text(
-                  '${UserSessionHandler.kUsername}',
+                  '${UserSessionHandler.kMomoUser?.name}',
                   style: context.theme.textTheme.headline4?.copyWith(
                     color: context.colorScheme.secondaryContainer,
                   ),
@@ -208,8 +210,8 @@ Future<void> showProfileSheetWithOptions(BuildContext context) async {
                   child: FloatingActionButton.extended(
                     heroTag: kHomeFabTag,
                     onPressed: () {
-                      UserSessionHandler.kUsername = null;
-                      context.router.pop();
+                      authCubit.logout();
+                      context.router.pop(true);
                     },
                     label: const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 24),
