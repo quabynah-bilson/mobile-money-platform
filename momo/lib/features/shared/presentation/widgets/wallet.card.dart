@@ -100,7 +100,9 @@ class WalletCard extends StatelessWidget {
                           .replaceAll('+', '')
                           .trim(),
                       style: context.theme.textTheme.headline6
-                          ?.copyWith(color: foreground ?? ThemeConfig.kWhite),
+                          ?.copyWith(
+                          letterSpacing: 2.5,
+                          color: foreground ?? ThemeConfig.kWhite),
                     ),
                   ),
                 ],

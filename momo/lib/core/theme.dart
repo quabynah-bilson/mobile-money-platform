@@ -91,6 +91,7 @@ class ThemeConfig {
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           actionsIconTheme: IconThemeData(color: Colors.black),
+          elevation: 0,
         ),
         listTileTheme: const ListTileThemeData(textColor: Colors.black),
       );
@@ -139,6 +140,7 @@ class ThemeConfig {
           iconTheme: IconThemeData(color: Colors.white),
           centerTitle: true,
           actionsIconTheme: IconThemeData(color: Colors.white),
+          elevation: 0,
         ),
         listTileTheme: const ListTileThemeData(textColor: Colors.white),
       );
