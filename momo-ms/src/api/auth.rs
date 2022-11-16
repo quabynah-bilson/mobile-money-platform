@@ -9,5 +9,8 @@ pub struct LoginRequest {
 
 #[post("/auth/login")]
 pub async fn login(request: Json<LoginRequest>) -> Json<String> {
-    return Json(format!("Signing with username: {} & password: {}", request.username, request.password));
+    return Json(format!(
+        "Signing with username: {} & password: {}",
+        request.username, request.password
+    ));
 }

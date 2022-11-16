@@ -9,6 +9,7 @@ edition = "2021"
 actix-web = "4.2.1"
 env_logger = "0.9.3"
 log = "0.4.17"
+mongodb = "2.3.1"
 serde = { version = "1.0.147", features = ["derive"] }
 strum = { version = "0.24.1", features = ["derive"] }
 strum_macros = "0.24.3"

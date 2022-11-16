@@ -2,9 +2,13 @@ part of '../bundle.purchase.dart';
 
 class _SelectRecipientPage extends StatefulWidget {
   final void Function() onSelect;
+  final bool loading;
 
-  const _SelectRecipientPage({Key? key, required this.onSelect})
-      : super(key: key);
+  const _SelectRecipientPage({
+    Key? key,
+    required this.onSelect,
+    this.loading = false,
+  }) : super(key: key);
 
   @override
   State<_SelectRecipientPage> createState() => _SelectRecipientPageState();
@@ -66,6 +70,7 @@ class _SelectRecipientPageState extends State<_SelectRecipientPage> {
                   controller: _numberController,
                   textFieldType: AppTextFieldType.phone,
                   validator: Validators.validate,
+                  enabled: !widget.loading,
                   autofocus: true,
                 ),
               ),

@@ -121,10 +121,11 @@ class _BundlePurchasePageState extends State<BundlePurchasePage> {
                               setState(() => _selectedPageIndex = page),
                           controller: _pageController,
                           children: [
-                            _SelectRecipientPage(onSelect: _validateInput),
+                            _SelectRecipientPage(
+                                onSelect: _validateInput, loading: _loading),
                             _pageOptionType == PageOptionType.bundle
                                 ? const _SelectBundleTypePage()
-                                : const _EnterAirtimeAmountPage(),
+                                : _EnterAirtimeAmountPage(loading: _loading),
                             const _ConfirmPaymentPage(),
                           ],
                         ),

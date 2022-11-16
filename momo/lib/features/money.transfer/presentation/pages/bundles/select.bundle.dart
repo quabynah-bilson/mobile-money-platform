@@ -8,8 +8,7 @@ class _SelectBundleTypePage extends StatefulWidget {
 }
 
 class _SelectBundleTypePageState extends State<_SelectBundleTypePage> {
+  final _bundles  = const [];
   @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
+  Widget build(BuildContext context) => Container();
 }
