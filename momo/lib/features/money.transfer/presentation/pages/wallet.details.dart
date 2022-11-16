@@ -20,7 +20,7 @@ class WalletDetailsPage extends StatefulWidget {
 }
 
 class _WalletDetailsPageState extends State<WalletDetailsPage> {
-  var _loading = false, _showBalances = false, _selectedIndex = 0;
+  var _loading = true, _showBalances = false, _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +50,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
         child: CustomScrollView(
           shrinkWrap: true,
           slivers: [
+            /// wallet info
             SliverToBoxAdapter(
               child: Container(
                 height: context.height * 0.4,
@@ -61,7 +62,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                         .withOpacity(kEmphasisLowest),
                   ),
                 ),
-                padding: const EdgeInsets.fromLTRB(24, 16, 24, 20),
+                padding: const EdgeInsets.fromLTRB(20, 16, 8, 20),
                 child: SafeArea(
                   bottom: false,
                   child: Column(
@@ -114,22 +115,14 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                                       color: context.colorScheme.onSecondary),
                             ),
                           ),
-                          FloatingActionButton(
-                            heroTag: 'send-money',
-                            onPressed: () =>
-                                context.showSnackBar(kFeatureUnderDev),
-                            backgroundColor: context.colorScheme.onSecondary,
-                            foregroundColor: context.colorScheme.secondary,
-                            child: const Icon(TablerIcons.send),
-                          ),
-                          const SizedBox(width: 16),
-                          FloatingActionButton(
+                          FloatingActionButton.extended(
                             heroTag: 'show-statement',
                             onPressed: () =>
                                 context.showSnackBar(kFeatureUnderDev),
                             backgroundColor: context.colorScheme.onSecondary,
                             foregroundColor: context.colorScheme.secondary,
-                            child: const Icon(TablerIcons.notes),
+                            icon: const Icon(TablerIcons.notes),
+                            label: const Text('Statements'),
                           ),
                         ],
                       ),
@@ -137,36 +130,44 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                   ),
                 ),
               ),
-            )
+            ),
+
+            /// content
+            SliverPadding(
+              padding: const EdgeInsets.only(
+                  top: 24, right: 24, left: 24, bottom: 16),
+              sliver: SliverToBoxAdapter(
+                child: Text(
+                  _selectedIndex == 0
+                      ? 'Your recent transactions'
+                      : 'Reversals',
+                  style: context.theme.textTheme.subtitle1,
+                ),
+              ),
+            ),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        heroTag: kHomeFabTag,
+        heroTag: 'send-money',
         // todo
         onPressed: () => context.showSnackBar(kFeatureUnderDev),
-        backgroundColor: context.colorScheme.primary,
-        foregroundColor: context.colorScheme.onPrimary,
-        child: const Icon(TablerIcons.notes),
+        backgroundColor: context.colorScheme.secondary,
+        foregroundColor: context.colorScheme.onSecondary,
+        child: const Icon(TablerIcons.send),
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        icons: [
-          _selectedIndex == 0 ? TablerIcons.home_eco : TablerIcons.home_x,
-          _selectedIndex == 1
-              ? Icons.interests_sharp
-              : Icons.interests_outlined,
-        ],
+        icons: const [TablerIcons.receipt, TablerIcons.arrow_back],
         activeIndex: _selectedIndex,
         onTap: (index) => setState(() => _selectedIndex = index),
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.smoothEdge,
         leftCornerRadius: 32,
         rightCornerRadius: 32,
-        backgroundColor: context.colorScheme.secondary,
-        activeColor: context.colorScheme.onSecondary,
-        inactiveColor:
-            context.colorScheme.onSecondary.withOpacity(kEmphasisLow),
+        backgroundColor: context.colorScheme.background,
+        activeColor: context.colorScheme.onBackground,
+        inactiveColor: context.theme.disabledColor.withOpacity(kEmphasisLow),
       ),
     );
   }
