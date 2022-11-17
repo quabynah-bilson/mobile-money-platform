@@ -11,7 +11,7 @@ class ThemeConfig {
       kPurple = Color(0xff822FD3),
       kRed = Colors.red;
 
-  static const _defaultFont = GoogleFonts.spaceGrotesk,
+  static const _defaultFont = GoogleFonts.dmSans,
       _secondaryFont = GoogleFonts.dmSans,
       _tertiaryFont = GoogleFonts.dmMono;
 
