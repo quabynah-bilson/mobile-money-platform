@@ -207,20 +207,22 @@ Future<bool?> showProfileSheetWithOptions(BuildContext context) async {
                 const SizedBox(height: 40),
                 SafeArea(
                   top: false,
-                  child: FloatingActionButton.extended(
-                    heroTag: kHomeFabTag,
-                    onPressed: () {
-                      authCubit.logout();
-                      context.router.pop(true);
-                    },
-                    label: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
-                      child: Text('Sign out'),
+                  child: Center(
+                    child: FloatingActionButton.extended(
+                      heroTag: kHomeFabTag,
+                      onPressed: () {
+                        authCubit.logout();
+                        context.router.pop(true);
+                      },
+                      label: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 24),
+                        child: Text('Sign out'),
+                      ),
+                      icon: const Icon(TablerIcons.logout),
+                      backgroundColor: context.colorScheme.error,
+                      foregroundColor: context.colorScheme.onErrorContainer,
+                      enableFeedback: true,
                     ),
-                    icon: const Icon(TablerIcons.logout),
-                    backgroundColor: context.colorScheme.error,
-                    foregroundColor: context.colorScheme.onErrorContainer,
-                    enableFeedback: true,
                   ),
                 ),
               ],

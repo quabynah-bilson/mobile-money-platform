@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:momo/core/constants.dart';
 import 'package:momo/core/extensions.dart';
-import 'package:momo/core/user.session.dart';
 import 'package:momo/core/validator.dart';
 import 'package:momo/features/auth/presentation/manager/auth_cubit.dart';
 import 'package:momo/features/shared/presentation/manager/bloc.state.dart';
@@ -35,8 +34,8 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
   @override
   void initState() {
     super.initState();
-    doAfterDelay(() => _verificationCubit.sendOtp(
-        phoneNumber: UserSessionHandler.kPhoneNumber ?? ''));
+    doAfterDelay(
+        () => _verificationCubit.sendOtp(phoneNumber: widget.phoneNumber));
   }
 
   @override
@@ -157,8 +156,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
       _formKey.currentState?.save();
 
       var code = _pinController.text.trim();
-      _authCubit.verifyOtp(
-          phoneNumber: UserSessionHandler.kPhoneNumber ?? '', code: code);
+      _authCubit.verifyOtp(phoneNumber: widget.phoneNumber, code: code);
     }
   }
 }

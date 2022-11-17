@@ -5,6 +5,7 @@ abstract class BaseWalletRepository {
   Future<Either<Wallet, String>> createWallet({
     required String phoneNumber,
     required String name,
+    required String provider,
   });
 
   Future<Either<List<Wallet>, String>> wallets();

@@ -12,9 +12,14 @@ class WalletCubit extends Cubit<BlocState> {
   Future<void> createWallet({
     required String phoneNumber,
     required String name,
+    required String provider,
   }) async {
     emit(BlocState.loadingState());
-    var either = await _repo.createWallet(phoneNumber: phoneNumber, name: name);
+    var either = await _repo.createWallet(
+      phoneNumber: phoneNumber,
+      name: name,
+      provider: provider,
+    );
     either.fold(
       (l) => emit(BlocState<Wallet>.successState(data: l)),
       (r) => emit(BlocState<String>.errorState(failure: r)),

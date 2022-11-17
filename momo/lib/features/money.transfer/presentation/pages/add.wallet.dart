@@ -6,9 +6,9 @@ import 'package:momo/core/constants.dart';
 import 'package:momo/core/extensions.dart';
 import 'package:momo/core/router/route.gr.dart';
 import 'package:momo/core/validator.dart';
-import 'package:momo/features/auth/presentation/manager/auth_cubit.dart';
 import 'package:momo/features/shared/domain/entities/wallet/wallet.dart';
 import 'package:momo/features/shared/presentation/manager/bloc.state.dart';
+import 'package:momo/features/shared/presentation/manager/common_cubit.dart';
 import 'package:momo/features/shared/presentation/manager/wallet_cubit.dart';
 import 'package:momo/features/shared/presentation/widgets/animated.column.dart';
 import 'package:momo/features/shared/presentation/widgets/animated.list.dart';
@@ -26,9 +26,10 @@ class AddWalletPage extends StatefulWidget {
 class _AddWalletPageState extends State<AddWalletPage> {
   final _formKey = GlobalKey<FormState>(),
       _phoneNumberController = TextEditingController(),
-      _networks = ['MTN'],
-      _authCubit = AuthCubit(),
-      _walletCubit = WalletCubit();
+      _nameController = TextEditingController(),
+      _networks = ['MTN', 'Vodafone', 'AirtelTigo'],
+      _walletCubit = WalletCubit(),
+      _commonCubit = CommonCubit();
   late var _loading = false, _selectedNetwork = _networks.first;
 
   @override
@@ -92,6 +93,42 @@ class _AddWalletPageState extends State<AddWalletPage> {
                           enabled: !_loading,
                           autofocus: true,
                           validator: Validators.validatePhone,
+                          onChange: (input) => _nameController.clear(),
+                        ),
+                        BlocConsumer(
+                          bloc: _commonCubit,
+                          listener: (context, state) {
+                            if (!mounted) return;
+
+                            if (state is ErrorState<String>) {
+                              context.showSnackBar(
+                                  state.failure,
+                                  context.colorScheme.errorContainer,
+                                  context.colorScheme.onErrorContainer);
+                            }
+
+                            if (state is SuccessState<String>) {
+                              setState(() => _nameController.text = state.data);
+                            }
+                          },
+                          builder: (context, state) {
+                            if (state is LoadingState) {
+                              return const LoadingIndicatorItem(
+                                  message: 'Getting customer name...');
+                            }
+
+                            if (state is SuccessState<String>) {
+                              return AppTextField(
+                                'Customer Name',
+                                controller: _nameController,
+                                enabled: !_loading || state is! LoadingState,
+                                readOnly: true,
+                                validator: Validators.validate,
+                              );
+                            }
+
+                            return const SizedBox.shrink();
+                          },
                         ),
                       ],
                     ),
@@ -126,21 +163,20 @@ class _AddWalletPageState extends State<AddWalletPage> {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       _formKey.currentState?.save();
 
-      var phoneNumber = _phoneNumberController.text.trim();
+      var phoneNumber = _phoneNumberController.text.trim(),
+          username = _nameController.text.trim();
 
-      /// verify wallet credentials
-      var successful = await context.router
-          .push(VerifyPinRoute(phoneNumber: formatPhoneNumber(phoneNumber)));
-      if (successful is bool && successful) {
+      if (username.isEmpty && phoneNumber.isNotEmpty) {
+        _commonCubit.getCustomerName(phoneNumber);
+      } else {
         /// validate with SMS prompt
-        successful = await context.router
+        var successful = await context.router
             .push(VerifyOtpRoute(phoneNumber: formatPhoneNumber(phoneNumber)));
         if (successful is bool && successful) {
-          // todo => get user name
           _walletCubit.createWallet(
-            phoneNumber: formatPhoneNumber(phoneNumber),
-            name: '',
-          );
+              phoneNumber: formatPhoneNumber(phoneNumber),
+              name: username,
+              provider: _selectedNetwork ?? '');
         }
       }
     }

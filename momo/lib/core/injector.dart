@@ -3,7 +3,9 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:momo/features/auth/data/repositories/auth.dart';
 import 'package:momo/features/auth/domain/repositories/auth.dart';
+import 'package:momo/features/shared/data/repositories/common.dart';
 import 'package:momo/features/shared/data/repositories/wallet.dart';
+import 'package:momo/features/shared/domain/repositories/common.dart';
 import 'package:momo/features/shared/domain/repositories/wallet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,4 +32,5 @@ Future<void> setupInjector() async {
   /// register repositories
   getIt.registerLazySingleton<BaseAuthRepository>(() => AuthRepository());
   getIt.registerLazySingleton<BaseWalletRepository>(() => WalletRepository());
+  getIt.registerLazySingleton<BaseCommonRepository>(() => CommonRepository());
 }

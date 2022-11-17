@@ -1,4 +1,5 @@
-use actix_web::{get, web::Json, HttpRequest};
+use actix_web::{get, HttpRequest, web::Json};
+use actix_web::web::Path;
 use tokio_stream::StreamExt;
 
 use crate::api::response::ApiResponse;
@@ -43,5 +44,17 @@ pub async fn get_banks(_: HttpRequest) -> Json<ApiResponse<Vec<Bank>>> {
         message: String::from(format!("{} banks available", banks.len())),
         success: true,
         payload: banks,
+    });
+}
+
+#[get("/common/get-customer-name-by-number/{phone_number}")]
+pub async fn get_customer_name_by_number(phone_number: Path<String>) -> Json<ApiResponse<String>> {
+    // todo => get random names from constants
+    let phone = phone_number.into_inner().to_string();
+
+    return Json(ApiResponse {
+        message: String::from(format!("{} account found", phone)),
+        success: true,
+        payload: "John Doe".to_string(),
     });
 }

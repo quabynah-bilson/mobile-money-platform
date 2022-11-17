@@ -62,7 +62,7 @@ class _DashboardPageState extends State<DashboardPage> {
               }
 
               if (state is SuccessState<List<Wallet>>) {
-                setState(() => _wallets = state.data);
+                setState(() => _wallets = state.data.reversed.toList());
               }
             },
           ),

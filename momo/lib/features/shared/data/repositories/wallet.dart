@@ -12,14 +12,18 @@ class WalletRepository implements BaseWalletRepository {
   final _server = getIt.get<Dio>();
 
   @override
-  Future<Either<Wallet, String>> createWallet(
-      {required String phoneNumber, required String name}) async {
+  Future<Either<Wallet, String>> createWallet({
+    required String phoneNumber,
+    required String name,
+    required String provider,
+  }) async {
     try {
       var response =
           await _server.post(FlutterConfig.get('CREATE_WALLET'), data: {
         'account_holder': name,
         'phone_number': formatPhoneNumber(phoneNumber),
-        "owner": UserSessionHandler.kMomoUser?.id,
+        'owner': UserSessionHandler.kMomoUser?.id,
+        'provider': provider.toUpperCase(),
       });
       var apiResponse = ApiResponse.fromJson(response.data);
 

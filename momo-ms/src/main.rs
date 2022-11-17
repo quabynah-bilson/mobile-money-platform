@@ -32,6 +32,7 @@ async fn main() -> std::io::Result<()> {
             // common
             .service(common::get_offers)
             .service(common::get_banks)
+            .service(common::get_customer_name_by_number)
             // money transfer
             .service(money_transfer::get_airtime_reversals)
             .service(money_transfer::schedule_transaction)
