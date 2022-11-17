@@ -107,6 +107,13 @@ class _DashboardPageState extends State<DashboardPage> {
               if (_wallets.isNotEmpty) ...{
                 IconButton(
                   color: context.colorScheme.onPrimary,
+                  onPressed: _walletCubit.wallets,
+                  icon: const Icon(TablerIcons.wallet),
+                  tooltip: 'Get wallets',
+                  enableFeedback: true,
+                ),
+                IconButton(
+                  color: context.colorScheme.onPrimary,
                   onPressed: () =>
                       setState(() => _showBalances = !_showBalances),
                   icon: Icon(
@@ -127,6 +134,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           body: LoadingOverlay(
             isLoading: _loading,
+            message: 'Getting your wallets...',
             child: SafeArea(
               bottom: false,
               child: Stack(
