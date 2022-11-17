@@ -40,7 +40,7 @@ class DashboardActionTile extends StatelessWidget {
               Icon(icon,
                   color: active
                       ? context.colorScheme.onSecondary
-                      : context.colorScheme.secondary,
+                      : context.colorScheme.onSurface,
                   size: 40),
               const SizedBox(height: 12),
               Text(

@@ -3,6 +3,7 @@ pub mod offer;
 pub mod sms;
 pub mod transaction;
 pub mod user;
+pub mod wallet;
 // mod bypass {
 //     use serde::{Deserialize, Deserializer, Serialize, Serializer};
 //

@@ -15,6 +15,8 @@ abstract class _$WalletCWProxy {
 
   Wallet id(String id);
 
+  Wallet owner(String owner);
+
   Wallet phone(String phone);
 
   Wallet provider(String provider);
@@ -30,6 +32,7 @@ abstract class _$WalletCWProxy {
     String? hashedPhone,
     String? holder,
     String? id,
+    String? owner,
     String? phone,
     String? provider,
   });
@@ -54,6 +57,9 @@ class _$WalletCWProxyImpl implements _$WalletCWProxy {
   Wallet id(String id) => this(id: id);
 
   @override
+  Wallet owner(String owner) => this(owner: owner);
+
+  @override
   Wallet phone(String phone) => this(phone: phone);
 
   @override
@@ -72,6 +78,7 @@ class _$WalletCWProxyImpl implements _$WalletCWProxy {
     Object? hashedPhone = const $CopyWithPlaceholder(),
     Object? holder = const $CopyWithPlaceholder(),
     Object? id = const $CopyWithPlaceholder(),
+    Object? owner = const $CopyWithPlaceholder(),
     Object? phone = const $CopyWithPlaceholder(),
     Object? provider = const $CopyWithPlaceholder(),
   }) {
@@ -93,6 +100,10 @@ class _$WalletCWProxyImpl implements _$WalletCWProxy {
           ? _value.id
           // ignore: cast_nullable_to_non_nullable
           : id as String,
+      owner: owner == const $CopyWithPlaceholder() || owner == null
+          ? _value.owner
+          // ignore: cast_nullable_to_non_nullable
+          : owner as String,
       phone: phone == const $CopyWithPlaceholder() || phone == null
           ? _value.phone
           // ignore: cast_nullable_to_non_nullable
@@ -117,18 +128,20 @@ extension $WalletCopyWith on Wallet {
 
 Wallet _$WalletFromJson(Map<String, dynamic> json) => Wallet(
       id: json['id'] as String,
-      holder: json['holder'] as String,
+      holder: json['account_holder'] as String,
       provider: json['provider'] as String,
-      phone: json['phone'] as String,
-      hashedPhone: json['hashedPhone'] as String,
+      phone: json['phone_number'] as String,
+      hashedPhone: json['hashed_phone'] as String,
+      owner: json['owner'] as String,
       balance: (json['balance'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$WalletToJson(Wallet instance) => <String, dynamic>{
       'id': instance.id,
-      'holder': instance.holder,
+      'account_holder': instance.holder,
       'provider': instance.provider,
-      'phone': instance.phone,
-      'hashedPhone': instance.hashedPhone,
+      'phone_number': instance.phone,
+      'hashed_phone': instance.hashedPhone,
+      'owner': instance.owner,
       'balance': instance.balance,
     };

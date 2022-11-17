@@ -97,7 +97,6 @@ class WalletCard extends StatelessWidget {
                     child: Text(
                       accountNumber
                           .replaceAll('-', ' ')
-                          .replaceAll('+', '')
                           .trim(),
                       style: context.theme.textTheme.headline6
                           ?.copyWith(

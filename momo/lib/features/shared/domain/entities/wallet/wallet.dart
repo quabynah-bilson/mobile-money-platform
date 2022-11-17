@@ -8,10 +8,16 @@ part 'wallet.g.dart';
 @CopyWith()
 class Wallet {
   final String id;
+  @JsonKey(name: 'account_holder')
   final String holder;
+  @JsonKey(name: 'provider')
   final String provider;
+  @JsonKey(name: 'phone_number')
   final String phone;
+  @JsonKey(name: 'hashed_phone')
   final String hashedPhone;
+  @JsonKey(name: 'owner')
+  final String owner;
   final double balance;
 
   const Wallet({
@@ -20,6 +26,7 @@ class Wallet {
     required this.provider,
     required this.phone,
     required this.hashedPhone,
+    required this.owner,
     required this.balance,
   });
 

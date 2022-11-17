@@ -377,8 +377,7 @@ class _DashboardPageState extends State<DashboardPage> {
   void _addNewWallet() async {
     var successful = await context.router.push(const AddWalletRoute());
     if (successful is bool && successful) {
-      // todo => reload wallets
-      context.showSnackBar(kFeatureUnderDev);
+      _walletCubit.wallets();
     }
   }
 }

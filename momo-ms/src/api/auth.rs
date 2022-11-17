@@ -6,7 +6,8 @@ use crate::api::response::ApiResponse;
 use crate::db::config;
 use crate::model::sms::VerificationCode;
 use crate::model::user::{MomoUser, MomoUserStatus};
-use crate::utils::constants::{DB_NAME, SMS_COL, USER_COL};
+use crate::model::wallet::Wallet;
+use crate::utils::constants::{DB_NAME, SMS_COL, USER_COL, WALLET_COL};
 use crate::utils::generators::generate_random_code;
 
 #[derive(Deserialize, Serialize)]
@@ -55,6 +56,7 @@ pub async fn register(request: Json<CreateUserRequest>) -> Json<ApiResponse<Opti
             payload: None,
         })
     } else {
+        // create account
         let mut user = MomoUser {
             id: oid::ObjectId::new().to_hex(),
             display_name: request.display_name.to_string(),
@@ -69,6 +71,24 @@ pub async fn register(request: Json<CreateUserRequest>) -> Json<ApiResponse<Opti
             .insert_one(to_bson(&user).unwrap(), None)
             .await
             .unwrap();
+
+        // create wallet for account
+        let mut wallet = Wallet {
+            id: oid::ObjectId::new().to_hex(),
+            account_holder: user.display_name.to_string(),
+            provider: "MTN".to_string(),
+            hashed_phone: "".to_string(),
+            phone_number: user.phone_number.to_string(),
+            balance: 0.0,
+            owner: user.id.to_string(),
+        };
+        wallet.hash_phone_number().unwrap();
+
+        client.database(DB_NAME).collection(WALLET_COL)
+            .insert_one(to_bson(&wallet).unwrap(), None)
+            .await
+            .unwrap();
+
         Json(ApiResponse {
             message: String::from(format!("signed in as {}", user.display_name)),
             success: true,
