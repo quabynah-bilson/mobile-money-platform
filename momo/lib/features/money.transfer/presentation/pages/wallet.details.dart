@@ -207,6 +207,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                       child: Center(
                         child: FloatingActionButton.extended(
                           heroTag: 'show-all-transactions',
+                          // todo => show all transactions
                           onPressed: () =>
                               context.showSnackBar(kFeatureUnderDev),
                           backgroundColor: context.colorScheme.onSurface,

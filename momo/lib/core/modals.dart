@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:auto_route/auto_route.dart';
 import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +102,7 @@ Future<void> showAppDetailsSheet(BuildContext context) async {
 /// show profile sheet with more options
 Future<bool?> showProfileSheetWithOptions(BuildContext context) async {
   var authCubit = AuthCubit();
+
   /// tile
   Widget buildTileAction(BuildContext context, String title, IconData icon,
           [void Function()? onTap]) =>
@@ -360,9 +363,9 @@ Future<void> showStatementsSheet(BuildContext context) async {
                           formKey.currentState?.save();
                           setState(() => loading = !loading);
                           await Future.delayed(kSampleDelay);
-                          context
-                            ..showSnackBar(kReceiveMomoPromptMessage)
-                            ..router.pop();
+                          showMessageSheet(context,
+                              message: kReceiveMomoPromptMessage);
+                          context.router.pop();
                         }
                       },
                       label: const Padding(
@@ -374,6 +377,64 @@ Future<void> showStatementsSheet(BuildContext context) async {
                     ),
                   ],
                 ),
+        ),
+      ),
+    ),
+  );
+}
+
+/// show message sheet
+Future<void> showMessageSheet(BuildContext context,
+    {required String message, String actionText = 'Okay'}) async {
+  await showModalBottomSheet(
+    context: context,
+    clipBehavior: Clip.hardEdge,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topRight: Radius.circular(kRadiusLarge),
+        topLeft: Radius.circular(kRadiusLarge),
+      ),
+    ),
+    builder: (context) => StatefulBuilder(
+      builder: (context, setState) => SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: AnimatedColumn(
+            animateType: AnimateType.slideUp,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Hero(
+                tag: kAppLoadingAnimation,
+                child: LottieBuilder.asset(
+                  kAppLoadingAnimation,
+                  height: context.height * 0.1,
+                  repeat: false,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                message,
+                style: context.theme.textTheme.subtitle1?.copyWith(
+                  color: context.colorScheme.onSurface
+                      .withOpacity(kEmphasisMedium),
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 40),
+              FloatingActionButton.extended(
+                heroTag: kHomeFabTag,
+                onPressed: context.router.pop,
+                label: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(actionText),
+                ),
+                backgroundColor: context.colorScheme.secondary,
+                foregroundColor: context.colorScheme.onSecondary,
+              ),
+            ],
+          ),
         ),
       ),
     ),

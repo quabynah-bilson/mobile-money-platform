@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:momo/core/constants.dart';
 import 'package:momo/core/extensions.dart';
+import 'package:momo/core/modals.dart';
 import 'package:momo/core/router/route.gr.dart';
 import 'package:momo/core/validator.dart';
 import 'package:momo/features/shared/domain/entities/wallet/wallet.dart';
@@ -41,10 +42,7 @@ class _AddWalletPageState extends State<AddWalletPage> {
           setState(() => _loading = state is LoadingState);
 
           if (state is ErrorState<String>) {
-            context.showSnackBar(
-                state.failure,
-                context.colorScheme.errorContainer,
-                context.colorScheme.onErrorContainer);
+            showMessageSheet(context, message: state.failure);
           }
 
           if (state is SuccessState<Wallet>) context.router.pop(true);
@@ -100,11 +98,10 @@ class _AddWalletPageState extends State<AddWalletPage> {
                           listener: (context, state) {
                             if (!mounted) return;
 
+                            setState(() => _loading = state is LoadingState);
+
                             if (state is ErrorState<String>) {
-                              context.showSnackBar(
-                                  state.failure,
-                                  context.colorScheme.errorContainer,
-                                  context.colorScheme.onErrorContainer);
+                              showMessageSheet(context, message: state.failure);
                             }
 
                             if (state is SuccessState<String>) {
@@ -112,18 +109,20 @@ class _AddWalletPageState extends State<AddWalletPage> {
                             }
                           },
                           builder: (context, state) {
-                            if (state is LoadingState) {
-                              return const LoadingIndicatorItem(
-                                  message: 'Getting customer name...');
-                            }
-
                             if (state is SuccessState<String>) {
                               return AppTextField(
                                 'Customer Name',
                                 controller: _nameController,
                                 enabled: !_loading || state is! LoadingState,
                                 readOnly: true,
-                                validator: Validators.validate,
+                                onTap: () {
+                                  var phone =
+                                      _phoneNumberController.text.trim();
+                                  if (phone.isNotEmpty && phone.length >= 10) {
+                                    _validateAndGetAccount();
+                                  }
+                                },
+                                // validator: Validators.validate,
                               );
                             }
 

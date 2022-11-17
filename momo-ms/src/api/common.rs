@@ -1,11 +1,13 @@
 use actix_web::{get, HttpRequest, web::Json};
 use actix_web::web::Path;
+use rand::Rng;
 use tokio_stream::StreamExt;
 
 use crate::api::response::ApiResponse;
 use crate::db::config;
 use crate::model::{bank::Bank, offer::Offer};
 use crate::utils::constants::{BANK_COL, DB_NAME, OFFER_COL};
+use crate::utils::generators;
 
 #[get("/common/offers")]
 pub async fn get_offers(_: HttpRequest) -> Json<ApiResponse<Vec<Offer>>> {
@@ -49,12 +51,14 @@ pub async fn get_banks(_: HttpRequest) -> Json<ApiResponse<Vec<Bank>>> {
 
 #[get("/common/get-customer-name-by-number/{phone_number}")]
 pub async fn get_customer_name_by_number(phone_number: Path<String>) -> Json<ApiResponse<String>> {
-    // todo => get random names from constants
     let phone = phone_number.into_inner().to_string();
+    let names = generators::generate_random_names().await.unwrap();
+    println!("get_customer_name_by => {:?}", names);
+    let customer_name = names.get(rand::thread_rng().gen_range(0..names.len())).unwrap().to_string();
 
     return Json(ApiResponse {
         message: String::from(format!("{} account found", phone)),
         success: true,
-        payload: "John Doe".to_string(),
+        payload: customer_name,
     });
 }

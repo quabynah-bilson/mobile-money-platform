@@ -39,7 +39,10 @@ class _SelectRecipientPageState extends State<_SelectRecipientPage> {
                     DashboardActionTile(
                       label: 'Self',
                       icon: Icons.account_circle_outlined,
-                      onTap: widget.onSelect,
+                      onTap: () {
+                        setState(() => _showRecipientNumberField = false);
+                        widget.onSelect();
+                      },
                     ),
                     DashboardActionTile(
                       label: 'Others',

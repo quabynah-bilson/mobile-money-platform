@@ -55,10 +55,7 @@ class _DashboardPageState extends State<DashboardPage> {
               setState(() => _loading = state is LoadingState);
 
               if (state is ErrorState<String>) {
-                context.showSnackBar(
-                    state.failure,
-                    context.colorScheme.errorContainer,
-                    context.colorScheme.onErrorContainer);
+                showMessageSheet(context, message: state.failure);
               }
 
               if (state is SuccessState<List<Wallet>>) {

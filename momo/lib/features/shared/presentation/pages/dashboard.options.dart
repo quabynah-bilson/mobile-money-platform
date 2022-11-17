@@ -40,6 +40,7 @@ class _DashboardOptionsPageState extends State<DashboardOptionsPage> {
                         verticalOffset: kListSlideOffset,
                         child: FadeInAnimation(child: child),
                       ),
+                      // todo => handle tile actions
                       children: [
                         const DashboardActionTile(
                           label: 'Savings',
@@ -64,8 +65,8 @@ class _DashboardOptionsPageState extends State<DashboardOptionsPage> {
                         DashboardActionTile(
                           label: 'Airtime reversals',
                           icon: TablerIcons.arrow_back,
-                          onTap: () => context
-                              .showSnackBar(kAirtimeReversalErrorMessage),
+                          onTap: () => showMessageSheet(context,
+                              message: kAirtimeReversalErrorMessage),
                         ),
                         DashboardActionTile(
                           label: 'Statements',

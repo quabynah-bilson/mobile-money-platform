@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:momo/core/constants.dart';
 import 'package:momo/core/extensions.dart';
+import 'package:momo/core/modals.dart';
 import 'package:momo/core/router/route.gr.dart';
 import 'package:momo/core/user.session.dart';
 import 'package:momo/core/validator.dart';
@@ -42,10 +43,7 @@ class _VerifyPinPageState extends State<VerifyPinPage> {
 
           if (state is ErrorState<String>) {
             _pinController.clear();
-            context.showSnackBar(
-                state.failure,
-                context.colorScheme.errorContainer,
-                context.colorScheme.onErrorContainer);
+            showMessageSheet(context, message: state.failure);
           }
 
           if (state is SuccessState<String>) {
@@ -109,6 +107,7 @@ class _VerifyPinPageState extends State<VerifyPinPage> {
                         flex: 2,
                         child: FloatingActionButton.extended(
                           heroTag: 'logout',
+                          elevation: 0,
                           onPressed: () {
                             _authCubit.logout();
                             context.router.pushAndPopUntil(
@@ -126,6 +125,7 @@ class _VerifyPinPageState extends State<VerifyPinPage> {
                         child: FloatingActionButton.extended(
                           heroTag: 'back',
                           onPressed: context.router.pop,
+                          elevation: 0,
                           icon: const Icon(TablerIcons.arrow_back_up),
                           backgroundColor: context.colorScheme.onPrimary,
                           foregroundColor: context.colorScheme.primary,

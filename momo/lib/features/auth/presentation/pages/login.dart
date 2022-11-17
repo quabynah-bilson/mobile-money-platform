@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:momo/core/constants.dart';
 import 'package:momo/core/extensions.dart';
+import 'package:momo/core/modals.dart';
 import 'package:momo/core/router/route.gr.dart';
 import 'package:momo/core/user.session.dart';
 import 'package:momo/core/validator.dart';
@@ -40,10 +41,7 @@ class _LoginPageState extends State<LoginPage> {
 
           if (state is ErrorState<String>) {
             _pinController.clear();
-            context.showSnackBar(
-                state.failure,
-                context.colorScheme.errorContainer,
-                context.colorScheme.onErrorContainer);
+            showMessageSheet(context, message: state.failure);
           }
 
           if (state is SuccessState<String>) _verifyOtpAndLogin();
@@ -105,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 40),
                   AppRoundedButton(
-                    text: 'Validate',
+                    text: 'Sign in',
                     onTap: _login,
                     enabled: !_loading,
                     buttonType: AppButtonType.swipeable,
