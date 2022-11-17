@@ -409,7 +409,7 @@ Future<void> showMessageSheet(BuildContext context,
                 tag: kAppLoadingAnimation,
                 child: LottieBuilder.asset(
                   kAppLoadingAnimation,
-                  height: context.height * 0.1,
+                  height: context.height * 0.15,
                   repeat: false,
                 ),
               ),
