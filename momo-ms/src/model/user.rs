@@ -38,14 +38,19 @@ impl MomoUser {
         let salt: [u8; 32] = rand::thread_rng().gen();
         let config = Config::default();
 
-        self.pin = argon2::hash_encoded(self.pin.as_bytes(), &salt, &config)
-            .map_err(|e| std::io::Error::new(ErrorKind::InvalidData, format!("Failed to hash pin: {}", e)))?;
+        self.pin = argon2::hash_encoded(self.pin.as_bytes(), &salt, &config).map_err(|e| {
+            std::io::Error::new(ErrorKind::InvalidData, format!("Failed to hash pin: {}", e))
+        })?;
 
         Ok(())
     }
 
     pub fn verify_pin(&self, pin: &[u8]) -> Result<bool, std::io::Error> {
-        argon2::verify_encoded(&self.pin, pin)
-            .map_err(|e| std::io::Error::new(ErrorKind::InvalidData, format!("Failed to verify pin: {}", e)))
+        argon2::verify_encoded(&self.pin, pin).map_err(|e| {
+            std::io::Error::new(
+                ErrorKind::InvalidData,
+                format!("Failed to verify pin: {}", e),
+            )
+        })
     }
 }

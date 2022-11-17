@@ -1,5 +1,5 @@
 use actix_web::{delete, post, web::Json};
-use mongodb::bson::{DateTime, doc, Document, oid, to_bson};
+use mongodb::bson::{doc, oid, to_bson, DateTime, Document};
 use serde::{Deserialize, Serialize};
 
 use crate::api::response::ApiResponse;
@@ -84,7 +84,9 @@ pub async fn register(request: Json<CreateUserRequest>) -> Json<ApiResponse<Opti
         };
         wallet.hash_phone_number().unwrap();
 
-        client.database(DB_NAME).collection(WALLET_COL)
+        client
+            .database(DB_NAME)
+            .collection(WALLET_COL)
             .insert_one(to_bson(&wallet).unwrap(), None)
             .await
             .unwrap();

@@ -1,6 +1,6 @@
-use actix_web::{delete, get, HttpRequest, post, web::Json};
 use actix_web::web::Path;
-use mongodb::bson::{doc, Document, oid, to_bson};
+use actix_web::{delete, get, post, web::Json, HttpRequest};
+use mongodb::bson::{doc, oid, to_bson, Document};
 use serde::{Deserialize, Serialize};
 use tokio_stream::StreamExt;
 
@@ -16,6 +16,7 @@ pub struct CreateWalletRequest {
     pub owner: String,
 }
 
+// todo
 #[post("/momo-transfer/get-airtime-reversals")]
 pub async fn get_airtime_reversals(_: HttpRequest) -> Json<ApiResponse<String>> {
     return Json(ApiResponse {
@@ -25,6 +26,7 @@ pub async fn get_airtime_reversals(_: HttpRequest) -> Json<ApiResponse<String>> 
     });
 }
 
+// todo
 #[post("/momo-transfer/transactions/schedule")]
 pub async fn schedule_transaction(_: HttpRequest) -> Json<ApiResponse<String>> {
     return Json(ApiResponse {
@@ -34,6 +36,7 @@ pub async fn schedule_transaction(_: HttpRequest) -> Json<ApiResponse<String>> {
     });
 }
 
+// todo
 #[post("/momo-transfer/transactions/allow-cashout")]
 pub async fn allow_cashout(_: HttpRequest) -> Json<ApiResponse<String>> {
     return Json(ApiResponse {
@@ -43,6 +46,7 @@ pub async fn allow_cashout(_: HttpRequest) -> Json<ApiResponse<String>> {
     });
 }
 
+// todo
 #[post("/momo-transfer/transactions/send-money")]
 pub async fn send_money(_: HttpRequest) -> Json<ApiResponse<String>> {
     return Json(ApiResponse {
@@ -52,6 +56,7 @@ pub async fn send_money(_: HttpRequest) -> Json<ApiResponse<String>> {
     });
 }
 
+// todo
 #[post("/momo-transfer/transactions/buy-bundle")]
 pub async fn buy_bundle(_: HttpRequest) -> Json<ApiResponse<String>> {
     return Json(ApiResponse {
@@ -61,6 +66,7 @@ pub async fn buy_bundle(_: HttpRequest) -> Json<ApiResponse<String>> {
     });
 }
 
+// todo
 #[get("/momo-transfer/transactions/approvals/{phone_number}")]
 pub async fn approvals(_: HttpRequest) -> Json<ApiResponse<String>> {
     return Json(ApiResponse {
@@ -70,6 +76,7 @@ pub async fn approvals(_: HttpRequest) -> Json<ApiResponse<String>> {
     });
 }
 
+// todo
 #[post("/momo-transfer/transactions/all")]
 pub async fn get_transactions(_: HttpRequest) -> Json<ApiResponse<String>> {
     return Json(ApiResponse {
@@ -79,6 +86,7 @@ pub async fn get_transactions(_: HttpRequest) -> Json<ApiResponse<String>> {
     });
 }
 
+// todo
 #[post("/momo-transfer/transactions/pay-bills")]
 pub async fn pay_bills(_: HttpRequest) -> Json<ApiResponse<String>> {
     return Json(ApiResponse {
@@ -88,6 +96,7 @@ pub async fn pay_bills(_: HttpRequest) -> Json<ApiResponse<String>> {
     });
 }
 
+// todo
 #[post("/momo-transfer/transactions/get-statement")]
 pub async fn get_statement(_: HttpRequest) -> Json<ApiResponse<String>> {
     return Json(ApiResponse {
@@ -119,11 +128,19 @@ pub async fn get_wallets(info: Path<String>) -> Json<ApiResponse<Vec<Wallet>>> {
 }
 
 #[post("/momo-transfer/wallets/new")]
-pub async fn create_wallet(request: Json<CreateWalletRequest>) -> Json<ApiResponse<Option<Wallet>>> {
+pub async fn create_wallet(
+    request: Json<CreateWalletRequest>,
+) -> Json<ApiResponse<Option<Wallet>>> {
     // get client
     let client = config::connect().await.unwrap();
     let collection = client.database(DB_NAME).collection(WALLET_COL);
-    let response = collection.find_one(doc! {"phone_number" : request.phone_number.to_string()}, None).await.unwrap();
+    let response = collection
+        .find_one(
+            doc! {"phone_number" : request.phone_number.to_string()},
+            None,
+        )
+        .await
+        .unwrap();
     if response.is_some() {
         Json(ApiResponse {
             message: String::from(format!(
@@ -144,7 +161,8 @@ pub async fn create_wallet(request: Json<CreateWalletRequest>) -> Json<ApiRespon
             owner: request.owner.to_string(),
         };
         wallet.hash_phone_number().unwrap();
-        collection.insert_one(to_bson(&wallet).unwrap(), None)
+        collection
+            .insert_one(to_bson(&wallet).unwrap(), None)
             .await
             .unwrap();
         return Json(ApiResponse {
