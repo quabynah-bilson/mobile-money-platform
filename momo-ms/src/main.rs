@@ -47,6 +47,7 @@ async fn main() -> std::io::Result<()> {
             .service(money_transfer::create_wallet)
             .service(money_transfer::delete_wallet)
     })
+    .bind(("192.168.0.170", 9999))?
     .bind(("0.0.0.0", 9999))?
     .run()
     .await
